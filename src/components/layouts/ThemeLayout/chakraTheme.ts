@@ -30,7 +30,7 @@ const chakraTheme = extendTheme({
       '900': '#000000'
     },
     // brand: {
-    //   '50': '#000',
+    //   '50': '#000000',
     //   '100': '#000',
     //   '200': '#000',
     //   '300': '#000',
@@ -89,6 +89,7 @@ const chakraTheme = extendTheme({
 
   // Components
   components: {
+    // Form
     Input: {
       defaultProps: {
         variant: 'filled',
@@ -102,6 +103,23 @@ const chakraTheme = extendTheme({
             _hover: { bg: 'white' },
             _focus: { bg: 'white' }
           }
+        }
+      }
+    },
+    // Modals
+    Modal: {
+      baseStyle: {
+        header: {
+          textAlign: 'center',
+          fontSize: '22px'
+        },
+        footer: {
+          justifyContent: 'center'
+        },
+        closeButton: {
+          borderRadius: 'full',
+          boxSize: '30px',
+          _focus: {}
         }
       }
     }
