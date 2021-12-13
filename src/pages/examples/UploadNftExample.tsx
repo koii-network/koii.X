@@ -1,3 +1,5 @@
+// context
+import { useFinnie } from "components/context/finnie";
 // ui
 import { Button, Input, Label, Paper } from "components/ui";
 // styles
@@ -5,12 +7,10 @@ import { Heading } from "./styles";
 // code snipperts
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { darcula } from "react-syntax-highlighter/dist/esm/styles/prism";
-// hooks
-import { useFinnie } from "services/hooks";
 
 export default function UploadNftExample() {
   const codeBlock = `
-const {connectToFinnie, walletAddress} = useFinnie(); 
+const {state: { connectToFinnie, walletAddress }} = useFinnie(); 
 
 <Button onClick={connectFinnie}>
   Click here to connect
@@ -18,7 +18,9 @@ const {connectToFinnie, walletAddress} = useFinnie();
   `.trim();
 
   /* Working example */
-  const { connectFinnie, isLoading, isError, walletAddress, isFinnieConnected } = useFinnie();
+  const {
+    state: { isLoading, isError, walletAddress, isFinnieConnected }
+  } = useFinnie();
 
   return (
     <div className="example--wrapper">
@@ -70,8 +72,8 @@ const {connectToFinnie, walletAddress} = useFinnie();
           {codeBlock}
         </SyntaxHighlighter>
       </Paper>
-      <Button as="a" href="https://github.com/koii-network/koii.X#usefinnie" target="_blank" size="md" color="primary" m="1rem 0 0 0">
-        <strong>useFinnie</strong> Documentations ↗
+      <Button as="a" href="https://github.com/koii-network/koii.X#usekoii" target="_blank" size="md" color="primary" m="1rem 0 0 0">
+        <strong>useKoii</strong> Documentations ↗
       </Button>
     </div>
   );

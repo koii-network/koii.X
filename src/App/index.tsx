@@ -1,6 +1,8 @@
 import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter } from "react-router-dom";
 import { Routes } from "routes";
+// providers
+import { FinnieProvider } from "components/context/finnie";
 // ui
 import { ThemeProvider } from "styled-components";
 import { theme } from "theme";
@@ -21,9 +23,11 @@ export const App = () => {
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <Routes />
-        </BrowserRouter>
+        <FinnieProvider>
+          <BrowserRouter>
+            <Routes />
+          </BrowserRouter>
+        </FinnieProvider>
       </QueryClientProvider>
     </ThemeProvider>
   );
