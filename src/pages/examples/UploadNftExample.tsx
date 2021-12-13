@@ -28,13 +28,25 @@ const {connectToFinnie, walletAddress} = useFinnie();
           Complete the form to upload your nft directly to Koii. <small>(After connecting to finnie)</small>
         </p>
         {/* Upload form */}
-        <Paper m="0.5rem 0 1rem 0">
-          <Label htmlFor="title">Nft Title</Label>
-          <Input type="text" id="title" />
+        <Paper p="1rem" m="0.5rem 0 1rem 0" spacing="0.725rem">
+          <div>
+            <Label htmlFor="title">Nft Title</Label>
+            <Input type="text" id="title" />
+          </div>
+          <div>
+            <Label htmlFor="username">Username</Label>
+            <Input type="text" id="username" />
+          </div>
+          <div>
+            <Label htmlFor="description">Description</Label>
+            <Input type="text" id="description" />
+          </div>
+          <div>
+            <Label htmlFor="file">Choose a file</Label>
+            <Input type="file" id="file" />
+          </div>
+          <Button>{isLoading ? "Loading..." : isFinnieConnected ? "Uploaded ✓" : "Upload"}</Button>
         </Paper>
-        <Button m="5px 0 1rem 0" color="secondary" isLoading={isLoading} onClick={connectFinnie}>
-          {isLoading ? "Connecting..." : isFinnieConnected ? "Connected ✓" : "Connect to finnie"}
-        </Button>
 
         {isFinnieConnected && (
           <Paper bg="#059669" color="white">

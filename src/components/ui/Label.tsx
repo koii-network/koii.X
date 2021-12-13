@@ -15,6 +15,7 @@ const StyledLabel = styled.label`
   font-size: ${({ theme }) => theme.fontSizes["md"]};
   font-weight: 500;
   margin-bottom: ${({ theme }) => theme.space[1]};
+  user-select: none;
 `;
 
 export const Label: React.FC<LabelProps> = ({ children, ...restProps }) => {
