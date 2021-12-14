@@ -15,15 +15,15 @@
 
 First of all, run `npx create-koii-app` to create a Koii Dapp.
 
-After the installation is done head to the installed project and inside it run `yarn start`. 
+After the installation is done head to the installed project and inside it run `yarn start`.
 
 ## Table of Contents
 
 - [Structure](#structure)
 - [Hooks](#hooks)
-  - [useFinnie](#useFinnie) 
-  - [useSdk](#useSdk) 
-  - [useKoii](#useKoii) 
+  - [useFinnie](#useFinnie)
+  - [useSdk](#useSdk)
+  - [useKoii](#useKoii)
 - [Integrations](#storybook)
   - [Storybook](#storybook)
 - [Environment](#environment)
@@ -42,6 +42,7 @@ Describes the app structure and usage of each part. Add additional ReadMe-files 
 - [storybook](./storybook/main.js) - see **[storybook](#storybook)** section
 
 # Hooks
+
 ## useFinnie
 
 Use the `useFinnie` hook whenever you need to interact with finnie.
@@ -52,20 +53,20 @@ Example below how to connect to finnie wallet and get the wallet address:
 import { useFinnie } from "services/hooks";
 
 function Component() {
-  const { connectFinnie, isLoading, isError, walletAddress, isFinnieConnected } = useFinnie();
+  const { state: { connectFinnie, isLoading, isError, walletAddress, isFinnieConnected } } = useFinnie();
 
   return (
     <>
       <button onClick={connectFinnie}>
         {isLoading ? "Connecting..." : isFinnieConnected ? "Connected ✓" : "Connect to finnie"}
       </button>
-      
+
       {isFinnieConnected && (
         <p>
             Connected. Your wallet address is: <code>{walletAddress}</code>
         </p>
       )}
-        
+
       {isError && (
           <p>An error occurred while connecting to finnie.</p>
       )}
@@ -84,7 +85,7 @@ Example below how to get Koii nft for the connected finnie wallet:
 import { useSdk } from "services/hooks";
 
 function Component() {
-  const {wallet, getKoiiNfts} = useSdk(); 
+  const {wallet, getKoiiNfts} = useSdk();
   return (
     <>
       <Button onClick={getKoiiNfts}>
@@ -105,8 +106,6 @@ function Component() {
 
 Use the `useKoii` hook whenever you need to interact with Koii internal apis, e.g Uploading to Koi.rocks platform.
 
-
-
 ## Styled Components
 
 Project uses Styled components to make the styles read more:
@@ -119,8 +118,7 @@ Project uses Styled components to make the styles read more:
 
 implementation of [react-storybook](https://github.com/storybookjs/react).
 
- Run `yarn storybook`
-
+Run `yarn storybook`
 
 ## Environment
 
@@ -138,4 +136,3 @@ These versions provides stable compatibility with React Native and other framewo
 We install and run our scripts with yarn, as an alternative to npm:
 
 **[Download Yarn](https://yarnpkg.com/lang/en/docs/install/)**
-
