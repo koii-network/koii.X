@@ -1,5 +1,5 @@
 // ui
-import { Button, Heading, SimpleGrid } from "@chakra-ui/react";
+import { Button, Heading, SimpleGrid, Link } from "@chakra-ui/react";
 import { NftCard, Card } from "components/cards";
 // code snipperts
 import SyntaxHighlighter from "react-syntax-highlighter";
@@ -40,19 +40,14 @@ const {wallet, getKoiiNfts} = useSdk();
 
         {status === "success" && (
           <Card bg="#E5E7EB" color="black">
-            <br />
             <p>
-              <>
-                Total attention: <strong>{formatDigitNumber(wallet?.totalAttention)}</strong>
-              </>
+              Total attention: <strong>{formatDigitNumber(wallet?.totalAttention)}</strong>
             </p>
             <p>
-              <>
-                Total Koii: <strong>{Math.round(wallet?.totalReward * 100 || 0) / 100}</strong>
-              </>
+              Total Koii: <strong>{Math.round(wallet?.totalReward * 100 || 0) / 100}</strong>
             </p>
-            <br />
-            <SimpleGrid columns={[1, 2, 3]} className="custom-scroll">
+
+            <SimpleGrid columns={[1, 2, 3]} className="custom-scroll" overflowY="auto" maxH="470px" gap="3" px="2">
               {wallet?.nfts?.map((nft: any, id: number) => {
                 return <NftCard item={nft} key={nft?.id || id} />;
               })}
@@ -71,7 +66,7 @@ const {wallet, getKoiiNfts} = useSdk();
           {codeBlock}
         </SyntaxHighlighter>
       </Card>
-      <Button as="a" href="https://github.com/koii-network/koii.X#usesdk" target="_blank" color="primary" m="1rem 0 0 0">
+      <Button as={Link} href="https://github.com/koii-network/koii.X#usesdk" isExternal mt="2">
         <strong>useSdk</strong> Documentations ↗
       </Button>
     </div>

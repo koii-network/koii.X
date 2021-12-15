@@ -1,7 +1,7 @@
 // context
 import { useFinnie } from "components/context/finnie";
 // ui
-import { Button, Input, FormLabel, Heading } from "@chakra-ui/react";
+import { Button, Input, FormLabel, Heading, Link } from "@chakra-ui/react";
 import { Card } from "components/cards";
 // code snippets
 import SyntaxHighlighter from "react-syntax-highlighter";
@@ -24,7 +24,7 @@ const {state: { connectToFinnie, walletAddress }} = useFinnie();
   return (
     <div>
       <Heading>— 3 Upload Nft to Koii</Heading>
-      <Card m="1rem 0 0 0" p="1rem">
+      <Card mt="2" p="1rem">
         <p>
           Complete the form to upload your nft directly to Koii. <small>(After connecting to finnie)</small>
         </p>
@@ -71,7 +71,7 @@ const {state: { connectToFinnie, walletAddress }} = useFinnie();
           {codeBlock}
         </SyntaxHighlighter>
       </Card>
-      <Button as="a" href="https://github.com/koii-network/koii.X#usekoii" target="_blank" m="1rem 0 0 0">
+      <Button as={Link} href="https://github.com/koii-network/koii.X#usekoii" isExternal mt="2">
         <strong>useKoii</strong> Documentations ↗
       </Button>
     </div>

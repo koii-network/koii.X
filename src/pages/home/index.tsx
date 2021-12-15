@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 // ui
-import { Center, Heading, Text } from "@chakra-ui/layout";
-import { Image } from "@chakra-ui/image";
-import { Button } from "@chakra-ui/button";
+import { Button, Image, Center, Heading, Text, Link as ChakraLink } from "@chakra-ui/react";
 
 export const Home: React.FC = () => {
   return (
@@ -12,7 +10,7 @@ export const Home: React.FC = () => {
       <Button as={Link} to="/examples" my="2">
         Examples →
       </Button>
-      <Button as="a" href="https://github.com/koii-network/koii.X#readme" target="_blank">
+      <Button as={ChakraLink} href="https://github.com/koii-network/koii.X#readme" isExternal>
         Documentations ↗
       </Button>
       <Text mt="1">Happy hacking!</Text>
