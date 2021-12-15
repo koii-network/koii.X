@@ -1,12 +1,14 @@
-import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter } from "react-router-dom";
+// routes
 import { Routes } from "routes";
 // providers
+import { QueryClient, QueryClientProvider } from "react-query";
 import { FinnieProvider } from "components/context/finnie";
-// ui
-import { ThemeProvider } from "styled-components";
-import { theme } from "theme";
-import { GlobalStyles } from "theme/GlobalStyles";
+import { ChakraProvider } from "@chakra-ui/react";
+// theme
+import { theme } from "./theme";
+// fonts
+import "@fontsource/ibm-plex-sans";
 
 /**
  *
@@ -20,15 +22,19 @@ const queryClient = new QueryClient();
 
 export const App = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      <QueryClientProvider client={queryClient}>
-        <FinnieProvider>
-          <BrowserRouter>
-            <Routes />
-          </BrowserRouter>
-        </FinnieProvider>
-      </QueryClientProvider>
-    </ThemeProvider>
+    <>
+      {/* Theme (Chakra UI) */}
+      <ChakraProvider theme={theme}>
+        {/* React Query Provider */}
+        <QueryClientProvider client={queryClient}>
+          {/* Finnie Provider */}
+          <FinnieProvider>
+            <BrowserRouter>
+              <Routes />
+            </BrowserRouter>
+          </FinnieProvider>
+        </QueryClientProvider>
+      </ChakraProvider>
+    </>
   );
 };
