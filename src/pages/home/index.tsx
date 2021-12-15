@@ -1,21 +1,21 @@
 import { Link } from "react-router-dom";
 // ui
-import { Button } from "components/ui";
-// styles
-import { Wrapper, Heading, Description, Image } from "./styles";
+import { Center, Heading, Text } from "@chakra-ui/layout";
+import { Image } from "@chakra-ui/image";
+import { Button } from "@chakra-ui/button";
 
 export const Home: React.FC = () => {
   return (
-    <Wrapper>
-      <Image src={"/static/logo.svg"} alt="koii-network-logo" />
+    <Center h="100vh" flexDir="column" p="2" textAlign="center" color="white" bg="blue.800">
+      <Image w="150px" src={"/static/logo.svg"} alt="koii-network-logo" />
       <Heading>Create Koii App</Heading>
-      <Button as={Link} to="/examples" size="md" color="secondary" m="1rem 0 0.5rem 0">
+      <Button as={Link} to="/examples" my="2">
         Examples →
       </Button>
-      <Button as="a" href="https://github.com/koii-network/koii.X#readme" target="_blank" size="md" color="secondary" m="0.25rem 0 0.5rem 0">
+      <Button as="a" href="https://github.com/koii-network/koii.X#readme" target="_blank">
         Documentations ↗
       </Button>
-      <Description>Happy hacking!</Description>
-    </Wrapper>
+      <Text mt="1">Happy hacking!</Text>
+    </Center>
   );
 };
