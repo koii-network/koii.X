@@ -1,7 +1,7 @@
 // context
 import { useFinnie } from "components/context/finnie";
 // ui
-import { Button, Heading } from "@chakra-ui/react";
+import { Button, Heading, Link } from "@chakra-ui/react";
 import { Card } from "components/cards";
 
 // code snippets
@@ -53,7 +53,7 @@ const {state: {connectToFinnie, walletAddress}} = useFinnie();
           {codeBlock}
         </SyntaxHighlighter>
       </Card>
-      <Button as="a" href="https://github.com/koii-network/koii.X#usefinnie" target="_blank" m="1rem 0 0 0">
+      <Button as={Link} href="https://github.com/koii-network/koii.X#usefinnie" isExternal mt="2">
         <strong>useFinnie</strong> Documentations ↗
       </Button>
     </div>
