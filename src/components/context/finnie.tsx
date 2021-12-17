@@ -1,15 +1,21 @@
-import React from "react";
+import React, { ReactNode } from "react";
 // api
-import { connectToExtension, getAddress, initExtension } from "services/api";
+import { connectToExtension, getAddress, getBalances, initExtension } from "services/api";
+import { toast } from "services/utils";
 
-const Context = React.createContext(null);
+interface ContextInterface {
+  state: any;
+  dispatch: any;
+}
+
+const Context = React.createContext<ContextInterface | null>(null);
 Context.displayName = "FinnieContext";
 
 const actionTypes = {
   changeValue: "CHANGE_VALUE"
 };
 
-const reducer = (state, action) => {
+const reducer = (state: any, action: any) => {
   switch (action.type) {
     case actionTypes.changeValue:
       const { payload } = action;
@@ -22,51 +28,65 @@ const reducer = (state, action) => {
 const initializer = () => {
   return {
     walletAddress: null,
+    walletBalance: null,
     isError: false,
     isLoading: false,
     isFinnieConnected: false
   };
 };
 
-function ContextProvider({ children }) {
+const ContextProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = React.useReducer(reducer, null, initializer);
 
   /* Helper Functions */
-  const connectFinnie = async () => {
+  const connectFinnie = async (isAsync: boolean = false) => {
     let address;
+    let balance: any;
     try {
       dispatch({
         type: "CHANGE_VALUE",
         payload: { isLoading: true, isError: null, isFinnieConnected: false }
       });
+      toast({ title: "Connecting..." });
       // Check if extension exists and get permissions.
       await initExtension();
       // Connect to extension
       await connectToExtension();
       // Get finnie address
-      await getAddress().then(res => {
+      await getAddress().then(async res => {
         if (res.status === 200) {
           /* Done, we have the address */
           address = res?.data;
+
+          await getBalances(res?.data).then(res => {
+            balance = res;
+          });
+
           dispatch({
             type: "CHANGE_VALUE",
-            payload: { walletAddress: address, isFinnieConnected: true, isLoading: false, isError: null }
+            payload: { walletAddress: address, isFinnieConnected: true, isLoading: false, isError: null, walletBalance: balance }
           });
+          toast({ status: "success", title: "Connected" });
+          return balance;
         } else {
           throw new Error("Error getting finnie address!");
         }
       });
-    } catch (error) {
+    } catch (error: any) {
+      toast({ status: "error", title: "Error connecting finnie" });
       dispatch({
         type: "CHANGE_VALUE",
         payload: { isLoading: false, isError: error, walletAddress: null, isFinnieConnected: false }
       });
+      if (isAsync) {
+        throw { message: "Error connecting finnie" };
+      }
     }
     return address;
   };
 
   return <Context.Provider value={{ state: { ...state, connectFinnie }, dispatch }}>{children}</Context.Provider>;
-}
+};
 
 function useContext() {
   const context = React.useContext(Context);

@@ -2,6 +2,16 @@
 // import { default as Axios } from "axios";
 // import Web3 from "web3";
 
+// sdk
+import * as kweb from "@_koi/sdk/web";
+let koiSDK = new kweb.Web();
+
+declare global {
+  interface Window {
+    koiiWallet?: any;
+  }
+}
+
 /**
  *
  * @param {Function} fn Function to poll for result
@@ -9,11 +19,11 @@
  * @param {Number} interval Polling interval
  * @returns {Promise}
  */
-export const poll = (fn, timeout, interval) => {
+export const poll = (fn: any, timeout: any, interval: any) => {
   var endTime = Number(new Date()) + (timeout || 2000);
   interval = interval || 100;
 
-  var checkCondition = function (resolve, reject) {
+  var checkCondition = function (resolve: any, reject: any) {
     // If the condition is met, we're done!
     var result = fn();
     if (result) {
@@ -32,12 +42,10 @@ export const poll = (fn, timeout, interval) => {
   return new Promise(checkCondition);
 };
 
-export const sleep = (t = 300) => new Promise(resolve => setTimeout(resolve, t));
-
 export const initExtension = async () => {
   try {
     // Does it exist?
-    let extensionObj = await poll(() => window.koiiWallet, 1000, 200);
+    let extensionObj: any = await poll(() => window.koiiWallet, 1000, 200);
     // Is it connected?
     let res = await extensionObj.getPermissions();
 
@@ -56,7 +64,7 @@ export const connectToExtension = async () => {
     if (res.status === 200) return true;
 
     throw new Error(res?.data);
-  } catch (error) {
+  } catch (error: any) {
     throw new Error(error);
   }
 };
@@ -67,10 +75,21 @@ export const getAddress = async () => {
     let res = await extension.getAddress();
     if (res) return res;
     else throw new Error(res.data);
-  } catch (error) {
+  } catch (error: any) {
     // If we get here it's most likey user uninstalled extension and re-installed
     // Very edgy edge-case, but better to handle than not
     extension?.disconnect();
     throw new Error(error);
   }
+};
+
+export const getBalances = async (walletAddress: any) => {
+  let koi: any;
+  let ar: any;
+  try {
+    await koiSDK.setWallet(walletAddress);
+    koi = await koiSDK.getKoiBalance();
+    ar = await koiSDK.getWalletBalance();
+    return { koi, ar };
+  } catch (error) {}
 };
