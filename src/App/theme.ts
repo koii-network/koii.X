@@ -97,6 +97,18 @@ export const theme = extendTheme({
         size: "sm"
       }
     },
+    Input: {
+      defaultProps: {
+        size: "sm"
+      }
+    },
+    FormLabel: {
+      baseStyle: {
+        marginBottom: "1",
+        fontWeight: "600",
+        fontSize: "sm"
+      }
+    },
     FormError: {
       baseStyle: {
         text: {
