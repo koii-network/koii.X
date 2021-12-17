@@ -14,3 +14,15 @@ export const formatDigitNumber = (val: any) => {
   if (val) return val.toLocaleString("en-US", { maximumFractionDigits: 2 });
   else return 0;
 };
+
+export const getMediaType = (fileType: any) => {
+  let mediaType = fileType;
+  if (fileType) {
+    if (fileType.includes("image/")) {
+      mediaType = "image";
+    } else if (fileType.includes("video/")) {
+      mediaType = "video";
+    }
+  }
+  return mediaType;
+};

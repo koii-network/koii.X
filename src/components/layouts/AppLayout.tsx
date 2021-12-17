@@ -1,8 +1,7 @@
 import React from "react";
 // ui
 import { Flex } from "@chakra-ui/react";
-import Nav from "components/Nav";
-import Footer from "components/Footer";
+import { Nav, Footer } from "components/common";
 
 interface AppLayoutProps {
   children: React.ReactNode;
