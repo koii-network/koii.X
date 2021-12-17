@@ -1,21 +1,19 @@
-import { Link } from "react-router-dom";
 // ui
-import { Button } from "components/ui";
-// styles
-import { Wrapper, Heading, Description, Image } from "./styles";
+import { Box, Center } from "@chakra-ui/react";
+import { DragAndDropUploader } from "components/upload";
 
 export const Home: React.FC = () => {
   return (
-    <Wrapper>
-      <Image src={"/static/logo.svg"} alt="koii-network-logo" />
-      <Heading>Create Koii App</Heading>
-      <Button as={Link} to="/examples" size="md" color="secondary" m="1rem 0 0.5rem 0">
-        Examples →
-      </Button>
-      <Button as="a" href="https://github.com/koii-network/koii.X#readme" target="_blank" size="md" color="secondary" m="0.25rem 0 0.5rem 0">
-        Documentations ↗
-      </Button>
-      <Description>Happy hacking!</Description>
-    </Wrapper>
+    <Box py="4" px="4" color="blue.500" bg="white">
+      {/* Container */}
+      <Box maxW="container.lg" mx="auto">
+        {/* Drag and drop uploader to Koi.rocks */}
+        <DragAndDropUploader />
+        {/* Leaderboard */}
+        <Center bg="gray.100" p="2" h="600px" rounded="sm" border="1px dashed" borderColor="gray.200" mt="2" color="gray.500">
+          {`<Leaderboard/>`}
+        </Center>
+      </Box>
+    </Box>
   );
 };

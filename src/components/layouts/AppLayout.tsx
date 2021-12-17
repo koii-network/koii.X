@@ -1,8 +1,7 @@
 import React from "react";
-import styled from "styled-components";
 // ui
-import Nav from "components/Nav";
-import Footer from "components/Footer";
+import { Flex } from "@chakra-ui/react";
+import { Nav, Footer } from "components/common";
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -10,14 +9,10 @@ interface AppLayoutProps {
 
 export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   return (
-    <Main>
+    <Flex flexDir="column" minH="100%" w="100%">
       <Nav />
       {children}
       <Footer />
-    </Main>
+    </Flex>
   );
 };
-const Main = styled.main`
-  height: 100%;
-  width: 100%;
-`;

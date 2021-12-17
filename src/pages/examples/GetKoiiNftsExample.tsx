@@ -1,8 +1,6 @@
 // ui
-import { Button, Paper } from "components/ui";
-import { NftCard } from "components/cards";
-// styles
-import { Heading, NftsListWrapper } from "./styles";
+import { Button, Heading, SimpleGrid, Link } from "@chakra-ui/react";
+import { NftCard, Card } from "components/cards";
 // code snipperts
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { darcula } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -30,50 +28,45 @@ const {wallet, getKoiiNfts} = useSdk();
   const { wallet, status, getKoiiNfts } = useSdk();
 
   return (
-    <div className="example--wrapper">
+    <div>
       <Heading>— 2 Get Koii Nfts</Heading>
-      <Paper m="1rem 0 0 0" p="1rem">
+      <Card m="1rem 0 0 0" p="1rem">
         <p>
           Click on the button to get your nfts. <small>(After connecting to finnie)</small>
         </p>
-        <Button m="5px 0 1rem 0" color="secondary" isLoading={status === "loading"} onClick={getKoiiNfts}>
+        <Button m="5px 0 1rem 0" isLoading={status === "loading"} onClick={getKoiiNfts}>
           {status === "loading" ? "Loading..." : status === "success" ? "Done ✓" : "Get my nfts"}
         </Button>
 
         {status === "success" && (
-          <Paper bg="#E5E7EB" color="black">
-            <br />
+          <Card bg="#E5E7EB" color="black">
             <p>
-              <>
-                Total attention: <strong>{formatDigitNumber(wallet?.totalAttention)}</strong>
-              </>
+              Total attention: <strong>{formatDigitNumber(wallet?.totalAttention)}</strong>
             </p>
             <p>
-              <>
-                Total Koii: <strong>{Math.round(wallet?.totalReward * 100 || 0) / 100}</strong>
-              </>
+              Total Koii: <strong>{Math.round(wallet?.totalReward * 100 || 0) / 100}</strong>
             </p>
-            <br />
-            <NftsListWrapper className="custom-scroll">
+
+            <SimpleGrid columns={[1, 2, 3]} className="custom-scroll" overflowY="auto" maxH="470px" gap="3" px="2">
               {wallet?.nfts?.map((nft: any, id: number) => {
                 return <NftCard item={nft} key={nft?.id || id} />;
               })}
-            </NftsListWrapper>
-          </Paper>
+            </SimpleGrid>
+          </Card>
         )}
 
         {status === "error" && (
-          <Paper bg="#DC2626" color="white">
+          <Card bg="#DC2626" color="white">
             <>An error occurred getting your nfts or connecting to finnie.</>
-          </Paper>
+          </Card>
         )}
 
         {/* Code Source */}
         <SyntaxHighlighter customStyle={{ borderRadius: "4px", fontSize: "12px", marginTop: "20px" }} language="javascript" style={darcula}>
           {codeBlock}
         </SyntaxHighlighter>
-      </Paper>
-      <Button as="a" href="https://github.com/koii-network/koii.X#usesdk" target="_blank" size="md" color="primary" m="1rem 0 0 0">
+      </Card>
+      <Button as={Link} href="https://github.com/koii-network/koii.X#usesdk" isExternal mt="2">
         <strong>useSdk</strong> Documentations ↗
       </Button>
     </div>
