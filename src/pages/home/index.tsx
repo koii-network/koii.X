@@ -2,7 +2,7 @@
 import { Box, Center } from "@chakra-ui/react";
 import { DragAndDropUploader } from "components/upload";
 
-export const Home: React.FC = () => {
+export function Home() {
   return (
     <Box py="4" px="4" color="blue.500" bg="white">
       {/* Container */}
@@ -16,4 +16,4 @@ export const Home: React.FC = () => {
       </Box>
     </Box>
   );
-};
+}
