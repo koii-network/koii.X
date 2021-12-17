@@ -23,7 +23,6 @@ export default function useSdk() {
 
       setState(prevState => ({ ...prevState, status: "success", wallet: { nfts, totalAttention, totalReward }, error: null }));
     } catch (error) {
-      console.log({ error });
       setState(prevState => ({ ...prevState, status: "error", error }));
     }
   };
