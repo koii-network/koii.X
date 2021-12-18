@@ -1,6 +1,6 @@
 // ui
 import { Box, Center } from "@chakra-ui/react";
-import { DragAndDropUploader } from "components/upload";
+import { DragAndDropUploader, Leaderboard } from "components/common";
 
 export function Home() {
   return (
@@ -10,6 +10,7 @@ export function Home() {
         {/* Drag and drop uploader to Koi.rocks */}
         <DragAndDropUploader />
         {/* Leaderboard */}
+        <Leaderboard />
         <Center bg="gray.100" p="2" h="600px" rounded="sm" border="1px dashed" borderColor="gray.200" mt="2" color="gray.500">
           {`<Leaderboard/>`}
         </Center>
