@@ -8,7 +8,6 @@ export function NsfwFilter() {
   const onNsfwChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsOn(e.target.checked || undefined, "replaceIn");
   };
-  console.log({ isOn });
 
   return (
     <>

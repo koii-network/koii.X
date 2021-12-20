@@ -1,4 +1,5 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
+import { ReactQueryDevtools } from "react-query/devtools";
 // routes
 import { Routes } from "routes";
 // providers
@@ -24,11 +25,12 @@ export const App = () => {
           <FinnieProvider>
             <BrowserRouter>
               {/* Query Params */}
-              <QueryParamProvider>
+              <QueryParamProvider ReactRouterRoute={Route}>
                 <Routes />
               </QueryParamProvider>
             </BrowserRouter>
           </FinnieProvider>
+          <ReactQueryDevtools initialIsOpen={true} />
         </QueryClientProvider>
       </ChakraProvider>
     </>
