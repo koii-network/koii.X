@@ -186,5 +186,11 @@ export const fireGTM = (data: any) => {
 };
 
 export const generateCardWithData = async (body: any) => {
-  return await axios.post(`https://api.koii.live/generateCardWithData`, body);
+  return await axios.post(`https://api.koii.live/generateCardWithData`, body, {
+    transformRequest: (data, headers: any) => {
+      headers.common["Access-Control-Allow-Origin"] = "*";
+      return data;
+    },
+    baseURL: undefined
+  });
 };

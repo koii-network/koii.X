@@ -5,7 +5,7 @@ interface Props {
   item: Record<string, any>;
 }
 
-export default function NftCard({ item }: Props) {
+export function NftCard({ item }: Props) {
   return (
     <Flex
       as={Link}
