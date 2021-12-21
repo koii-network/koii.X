@@ -1,6 +1,6 @@
 import Arweave from "arweave";
 // utils
-import { poll } from "services/api";
+import { poll } from "services/utils";
 import { getFileData } from "services/utils";
 import axios from "services/axios";
 

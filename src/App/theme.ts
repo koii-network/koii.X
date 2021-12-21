@@ -131,6 +131,11 @@ export const theme = extendTheme({
           zIndex: 999
         }
       }
+    },
+    Modal: {
+      defaultProps: {
+        isCentered: true
+      }
     }
   }
 });
