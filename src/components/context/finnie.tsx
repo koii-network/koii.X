@@ -1,6 +1,8 @@
 import React, { ReactNode } from "react";
 // api
-import { connectToExtension, getAddress, getBalances, initExtension } from "services/api";
+import { getAddress, getBalances } from "services/api/sdk";
+import { connectToExtension, disconnectExtension, initExtension } from "services/api/finnie";
+// utils
 import { toast } from "services/utils";
 
 interface ContextInterface {
@@ -84,8 +86,23 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
     }
     return address;
   };
+  const disconnectFinnie = async () => {
+    // Check if extension exists and get permissions.
+    await disconnectExtension();
 
-  return <Context.Provider value={{ state: { ...state, connectFinnie }, dispatch }}>{children}</Context.Provider>;
+    dispatch({
+      type: "CHANGE_VALUE",
+      payload: {
+        walletAddress: null,
+        walletBalance: null,
+        isError: false,
+        isLoading: false,
+        isFinnieConnected: false
+      }
+    });
+  };
+
+  return <Context.Provider value={{ state: { ...state, connectFinnie, disconnectFinnie }, dispatch }}>{children}</Context.Provider>;
 };
 
 function useContext() {
