@@ -61,7 +61,7 @@ export function ReportModal({ isOpen, onClose, nftId, nftTitle }: Props) {
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose} size="xl">
+      <Modal isOpen={isOpen} onClose={onClose} size="xl" motionPreset="slideInBottom">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader as={Flex} align="center">
