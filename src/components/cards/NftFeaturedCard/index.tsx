@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useNft } from "hooks/api";
 // ui
 import { Flex, Link, Image, Heading, Text, Center, Spinner, Stack, ButtonGroup, Button, Skeleton, useDisclosure } from "@chakra-ui/react";
-import { ReportModal, ShareModal } from "components/modals";
+import { ReportModal, ShareModal, TipArtistModal } from "components/modals";
 // assets
 import fallbackImage from "assets/fallback.png";
 
@@ -100,12 +100,15 @@ const Footbar = ({ nft }: Props) => {
   /* Modal */
   const { isOpen: isReportModalOpen, onOpen: openReportModal, onClose: closeReportModal } = useDisclosure();
   const { isOpen: isShareModalOpen, onOpen: openShareModal, onClose: closeShareModal } = useDisclosure();
+  const { isOpen: isTipModalOpen, onOpen: openTipModal, onClose: closeTipModal } = useDisclosure();
 
   return (
     <>
       {/* Modals */}
-      <ReportModal isOpen={isReportModalOpen} onClose={closeReportModal} nftId={nft?.id} nftTitle={nft?.title} />
-      <ShareModal isOpen={isShareModalOpen} onClose={closeShareModal} nftId={nft?.id} nftTitle={nft?.title} />
+      {isReportModalOpen && <ReportModal isOpen={isReportModalOpen} onClose={closeReportModal} nftId={nft?.id} nftTitle={nft?.title} />}
+      {isShareModalOpen && <ShareModal isOpen={isShareModalOpen} onClose={closeShareModal} nftId={nft?.id} nftTitle={nft?.title} />}
+      {isTipModalOpen && <TipArtistModal isOpen={isTipModalOpen} onClose={closeTipModal} artistAddress={nft?.owner} artistName={nft?.name} />}
+
       <Stack direction="row" p="2" roundedBottom="md" bg="blue.500" color="white">
         <ButtonGroup
           w="100%"
@@ -115,7 +118,7 @@ const Footbar = ({ nft }: Props) => {
             e.preventDefault();
           }}
         >
-          <Button aria-label="tip" children="Tip Artist" />
+          <Button aria-label="tip" children="Tip Artist" onClick={openTipModal} />
           <Button aria-label="tip" children="Share" onClick={openShareModal} />
           <Button aria-label="tip" children="Report" ml="auto" onClick={openReportModal} />
         </ButtonGroup>

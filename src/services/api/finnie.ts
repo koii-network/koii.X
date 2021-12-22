@@ -1,5 +1,5 @@
 // utils
-import { poll } from "services/utils";
+import { poll, sleep } from "services/utils";
 
 declare global {
   interface Window {
@@ -26,7 +26,6 @@ export const connectToExtension = async () => {
   try {
     const extension = window.koiiWallet;
     let res = await extension.connect();
-    console.log({ res });
 
     if (res.status === 200) return true;
 
@@ -41,4 +40,9 @@ export const disconnectExtension = async () => {
     await window?.koiiWallet?.disconnect();
     return true;
   } catch (error) {}
+};
+
+export const sendKoiiTip = async (artistAddress: string, amount: number) => {
+  const extension = window.koiiWallet;
+  return await extension.sendKoii(artistAddress, amount);
 };
