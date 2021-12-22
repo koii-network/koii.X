@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useNft } from "hooks/api";
 // ui
 import { Flex, Link, Image, Heading, Text, Center, Spinner, Stack, ButtonGroup, Button, Skeleton, useDisclosure } from "@chakra-ui/react";
-import { ReportModal } from "components/modals";
+import { ReportModal, ShareModal } from "components/modals";
 // assets
 import fallbackImage from "assets/fallback.png";
 
@@ -99,11 +99,13 @@ function ThumbnailLoading() {
 const Footbar = ({ nft }: Props) => {
   /* Modal */
   const { isOpen: isReportModalOpen, onOpen: openReportModal, onClose: closeReportModal } = useDisclosure();
+  const { isOpen: isShareModalOpen, onOpen: openShareModal, onClose: closeShareModal } = useDisclosure();
 
   return (
     <>
       {/* Modals */}
       <ReportModal isOpen={isReportModalOpen} onClose={closeReportModal} nftId={nft?.id} nftTitle={nft?.title} />
+      <ShareModal isOpen={isShareModalOpen} onClose={closeShareModal} nftId={nft?.id} nftTitle={nft?.title} />
       <Stack direction="row" p="2" roundedBottom="md" bg="blue.500" color="white">
         <ButtonGroup
           w="100%"
@@ -114,7 +116,7 @@ const Footbar = ({ nft }: Props) => {
           }}
         >
           <Button aria-label="tip" children="Tip Artist" />
-          <Button aria-label="tip" children="Share" />
+          <Button aria-label="tip" children="Share" onClick={openShareModal} />
           <Button aria-label="tip" children="Report" ml="auto" onClick={openReportModal} />
         </ButtonGroup>
       </Stack>
