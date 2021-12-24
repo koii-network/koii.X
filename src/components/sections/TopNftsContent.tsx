@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { StringParam, withQueryParams } from "use-query-params";
 // api
 import { useNfts } from "hooks/api";
@@ -6,10 +7,17 @@ import { Center, SimpleGrid, Spinner } from "@chakra-ui/react";
 import { NftFeaturedCard } from "components/cards";
 
 const TopNftsContent = ({ query }: any) => {
-  // url queries
+  /*  */
   const { t: timeframe } = query;
   /* Get nfts based on the timeframe */
   const { data: nfts, isLoading } = useNfts({ timeframe });
+  // const [nftsView, setNftsView] = useState(nfts);
+
+  // useEffect(() => {
+  //   setNftsView(nfts);
+  // }, [nfts]);
+  // // /* Pagination  */
+  // console.log({ nfts });
 
   return (
     <>
@@ -23,6 +31,9 @@ const TopNftsContent = ({ query }: any) => {
           {nfts?.map((nft: Record<string, any>) => (
             <NftFeaturedCard nft={nft} key={nft?.id} />
           ))}
+          {/* No nfts to show. */}
+          {/* {nftsView?.length === 0 && <Center w="100%" minH="300px">
+            </Center>} */}
         </SimpleGrid>
       )}
     </>
