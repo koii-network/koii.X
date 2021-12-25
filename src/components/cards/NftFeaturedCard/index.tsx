@@ -12,56 +12,61 @@ interface Props {
   nft: Record<string, any>;
 }
 
-export function NftFeaturedCard({ nft }: Props) {
-  const MotionFlex = motion(Flex);
-  const { data: item, isLoading } = useNft({ id: nft?.id });
+export const NftFeaturedCard = memo<Props>(
+  ({ nft }) => {
+    const MotionFlex = motion(Flex);
+    const { data: item, isLoading } = useNft({ id: nft?.id });
 
-  return (
-    <>
-      {isLoading && (
-        <Stack w="100%" spacing="4">
-          <Skeleton h="200px" w="100%" />
-          <div>
-            <Skeleton h="50px" w="100%" mb="2" />
-            <Skeleton h="50px" w="100%" />
-          </div>
-        </Stack>
-      )}
-      <MotionFlex
-        as={Link}
-        flexDir="column"
-        w="100%"
-        href={`https://koi.rocks/content-details/${nft?.id}`}
-        isExternal
-        rel="noopener noreferrer"
-        textDecor="none"
-        role="group"
-        rounded="md"
-        shadow="card"
-        _hover={{ textDecor: "none" }}
-        whileHover={{
-          translateY: -3
-        }}
-      >
-        {/* Thumbnail */}
-        <ThumbnailContainer nft={item} />
-        {/* Details */}
-        <Flex flexDir="column" p="4" bg="white" flexGrow="1" textAlign="left">
-          {/* Title */}
-          <Heading as="h2" size="md" noOfLines={2} mb="2px" color="blue.500">
-            {item?.title}
-          </Heading>
-          {/* Description */}
-          <Text noOfLines={2} fontSize="sm" color="blue.200" lineHeight="short">
-            {item?.description}
-          </Text>
-        </Flex>
-        {/* Footbar */}
-        <Footbar nft={item} />
-      </MotionFlex>
-    </>
-  );
-}
+    return (
+      <>
+        {isLoading && (
+          <Stack w="100%" spacing="4">
+            <Skeleton h="200px" w="100%" />
+            <div>
+              <Skeleton h="50px" w="100%" mb="2" />
+              <Skeleton h="50px" w="100%" />
+            </div>
+          </Stack>
+        )}
+        <MotionFlex
+          as={Link}
+          flexDir="column"
+          w="100%"
+          href={`https://koi.rocks/content-details/${nft?.id}`}
+          isExternal
+          rel="noopener noreferrer"
+          textDecor="none"
+          role="group"
+          rounded="md"
+          shadow="card"
+          _hover={{ textDecor: "none" }}
+          whileHover={{
+            translateY: -3
+          }}
+        >
+          {/* Thumbnail */}
+          <ThumbnailContainer nft={item} />
+          {/* Details */}
+          <Flex flexDir="column" p="4" bg="white" flexGrow="1" textAlign="left">
+            {/* Title */}
+            <Heading as="h2" size="md" noOfLines={2} mb="2px" color="blue.500">
+              {item?.title}
+            </Heading>
+            {/* Description */}
+            <Text noOfLines={2} fontSize="sm" color="blue.200" lineHeight="short">
+              {item?.description}
+            </Text>
+          </Flex>
+          {/* Footbar */}
+          <Footbar nft={item} />
+        </MotionFlex>
+      </>
+    );
+  },
+  (prev, next) => {
+    return prev.nft?.id === next.nft?.id;
+  }
+);
 
 /* Thumbnail */
 const ThumbnailContainer = ({ nft }: Props) => {
