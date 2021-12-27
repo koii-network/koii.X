@@ -1,6 +1,8 @@
 import { createStandaloneToast } from "@chakra-ui/toast";
 // chakra theme
 import { theme } from "App/theme";
+//
+import port from "services/port";
 
 export const sleep = (t: number = 300) => new Promise(resolve => setTimeout(resolve, t));
 
@@ -28,16 +30,18 @@ export const formatDigitNumber = (val: any) => {
 
 /**
  * Get file's media type
- * @param {string} fileType html5 file type
+ * @param {string} contentType html5 content type
  * @returns {string} file type
  */
-export const getMediaType = (fileType: any) => {
-  let mediaType = fileType;
-  if (fileType) {
-    if (fileType.includes("image/")) {
+export const getMediaType = (contentType: any) => {
+  let mediaType = contentType;
+  if (contentType) {
+    if (contentType.includes("image/")) {
       mediaType = "image";
-    } else if (fileType.includes("video/")) {
+    } else if (contentType.includes("video/")) {
       mediaType = "video";
+    } else if (contentType.includes("text/html")) {
+      mediaType = "iframe";
     }
   }
   return mediaType;
@@ -54,6 +58,36 @@ export const getFileData = async (url: string) => {
   const dataBuffer = await blob.arrayBuffer();
 
   return [dataBuffer, blob];
+};
+
+/**
+ *
+ * @param {Function} fn Function to poll for result
+ * @param {Number} timeout How long to poll for
+ * @param {Number} interval Polling interval
+ * @returns {Promise}
+ */
+export const poll = (fn: any, timeout: any, interval: any) => {
+  var endTime = Number(new Date()) + (timeout || 2000);
+  interval = interval || 100;
+
+  var checkCondition = function (resolve: any, reject: any) {
+    // If the condition is met, we're done!
+    var result = fn();
+    if (result) {
+      resolve(result);
+    }
+    // If the condition isn't met but the timeout hasn't elapsed, go again
+    else if (Number(new Date()) < endTime) {
+      setTimeout(checkCondition, interval, resolve, reject);
+    }
+    // Didn't match and too much time, reject!
+    else {
+      reject(new Error("timed out for " + fn + ": " + arguments));
+    }
+  };
+
+  return new Promise(checkCondition);
 };
 
 // Toast
@@ -108,32 +142,24 @@ export const convertToAr = (balance: any) => {
   return (value / 1000000000000)?.toFixed?.(8);
 };
 
+export const triggerPort = (nftId: any[]) => {
+  port.propagatePoRT(nftId);
+};
+
 /**
- *
- * @param {Function} fn Function to poll for result
- * @param {Number} timeout How long to poll for
- * @param {Number} interval Polling interval
- * @returns {Promise}
+ * Format a timestamp to a local date
+ * @param {string} timestamp unix timestamp
+ * @param {object} options .toLocaleString() options
+ * @returns formatted local date
  */
-export const poll = (fn: any, timeout: any, interval: any) => {
-  var endTime = Number(new Date()) + (timeout || 2000);
-  interval = interval || 100;
-
-  var checkCondition = function (resolve: any, reject: any) {
-    // If the condition is met, we're done!
-    var result = fn();
-    if (result) {
-      resolve(result);
-    }
-    // If the condition isn't met but the timeout hasn't elapsed, go again
-    else if (Number(new Date()) < endTime) {
-      setTimeout(checkCondition, interval, resolve, reject);
-    }
-    // Didn't match and too much time, reject!
-    else {
-      reject(new Error("timed out for " + fn + ": " + arguments));
-    }
-  };
-
-  return new Promise(checkCondition);
+export const formatUnixTimestamp = (
+  timestamp: string,
+  options: Record<string, any> = {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+  }
+) => {
+  if (!timestamp) return null;
+  return new Date(parseInt(timestamp) * 1000).toLocaleString(undefined, options);
 };
