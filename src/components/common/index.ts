@@ -4,3 +4,5 @@ export { DragAndDropUploader } from "./DragAndDropUploader";
 export { Leaderboard } from "./Leaderboard";
 export { TimeFilter } from "./TimeFilter";
 export { NsfwFilter } from "./NsfwFilter";
+export { NftMediaContainer } from "./NftMediaContainer";
+export { NftFootbar } from "./NftFootbar";

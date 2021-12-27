@@ -4,6 +4,7 @@
   "private": true,
   "license": "",
   "dependencies": {
+    "@_koi/port": "^0.3.10-beta",
     "@_koi/sdk": "^2.4.11",
     "@babel/plugin-proposal-decorators": "^7.13.15",
     "@babel/preset-typescript": "^7.13.0",
