@@ -17,7 +17,6 @@ const fetchNfts = async (timeframe: string = "1w") => {
 export function useNfts({ timeframe = "1w" }: Props) {
   return useQuery(`nfts-${timeframe}`, () => fetchNfts(timeframe), {
     staleTime: 60 * 1000 * 5, // 5min cache
-    // TODO: put it back to 5min cache
     refetchOnWindowFocus: undefined
   });
 }

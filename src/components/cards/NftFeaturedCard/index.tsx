@@ -1,3 +1,4 @@
+import { Link as RouterLink } from "react-router-dom";
 import { useState, memo } from "react";
 import { motion } from "framer-motion";
 // api
@@ -29,31 +30,32 @@ export const NftFeaturedCard = memo<Props>(
           </Stack>
         )}
         <MotionFlex
-          as={Link}
           flexDir="column"
           w="100%"
-          href={`https://koi.rocks/content-details/${nft?.id}`}
-          isExternal
-          rel="noopener noreferrer"
-          textDecor="none"
           role="group"
           rounded="md"
           shadow="card"
-          _hover={{ textDecor: "none" }}
           whileHover={{
             translateY: -3
           }}
+          pos="relative"
+          zIndex="1"
         >
+          {/* Link wrapper */}
+          <Link as={RouterLink} to={`/nft/${nft?.id}`} pos="absolute" w="100%" h="100%" top="0" left="0" zIndex="2" rounded="md" />
           {/* Thumbnail */}
           <ThumbnailContainer nft={item} />
           {/* Details */}
           <Flex flexDir="column" p="4" bg="white" flexGrow="1" textAlign="left">
             {/* Title */}
-            <Heading as="h2" size="md" noOfLines={2} mb="2px" color="blue.500">
+            <Heading as="h2" size="md" noOfLines={2} color="blue.500">
               {item?.title}
             </Heading>
+            <Link as={RouterLink} to={`/artist/${item?.owner || item?.holders?.[0]}`} color="gray.400" fontSize="xs" noOfLines={1} mt="1px" _hover={{ textDecor: "underline" }} zIndex="3">
+              {item?.name}
+            </Link>
             {/* Description */}
-            <Text noOfLines={2} fontSize="sm" color="blue.200" lineHeight="short">
+            <Text noOfLines={2} mt="2" fontSize="sm" color="blue.200" lineHeight="short">
               {item?.description}
             </Text>
           </Flex>
@@ -114,7 +116,7 @@ const Footbar = ({ nft }: Props) => {
       {isShareModalOpen && <ShareModal isOpen={isShareModalOpen} onClose={closeShareModal} nftId={nft?.id} nftTitle={nft?.title} />}
       {isTipModalOpen && <TipArtistModal isOpen={isTipModalOpen} onClose={closeTipModal} artistAddress={nft?.owner} artistName={nft?.name} />}
 
-      <Stack direction="row" p="2" roundedBottom="md" bg="blue.500" color="white">
+      <Stack direction="row" p="2" roundedBottom="md" bg="blue.500" color="white" zIndex="3">
         <ButtonGroup
           w="100%"
           size="xs"
