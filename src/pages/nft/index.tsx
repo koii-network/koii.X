@@ -5,11 +5,32 @@ import { useNft } from "hooks/api";
 // utils
 import { formatDigitNumber, formatUnixTimestamp } from "services/utils";
 // ui
-import { Box, Center, SimpleGrid, Heading, Text, Stack, Link, Button, Wrap, WrapItem, Badge, Spinner, Alert, AlertIcon, AlertTitle, AlertDescription } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  SimpleGrid,
+  Heading,
+  Text,
+  Stack,
+  Link,
+  Button,
+  Wrap,
+  WrapItem,
+  Badge,
+  Spinner,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  IconButton,
+  IconButtonProps
+} from "@chakra-ui/react";
 import { NftFootbar, NftMediaContainer } from "components/common";
 // icons
 import { RiExternalLinkLine } from "react-icons/ri";
 import { KoiiIcon } from "components/icons";
+import { ImArrowRight2, ImArrowLeft2 } from "react-icons/im";
+import { motion } from "framer-motion";
 
 interface RouteProps {
   id: string;
@@ -18,7 +39,6 @@ interface RouteProps {
 export function Nft({ match }: RouteComponentProps<RouteProps>) {
   /* Get nft based on url params */
   const { data: nft, isLoading, isError } = useNft({ id: match?.params?.id });
-
   /* on Error */
   if (isError)
     return (
@@ -47,7 +67,10 @@ export function Nft({ match }: RouteComponentProps<RouteProps>) {
         </Center>
       )}
       {!isLoading && (
-        <Box w="100%">
+        <Box w="100%" pos="relative">
+          {/* Navigation Buttons */}
+          {nft?.next && <NavigationButton aria-label="go-next" href={nft?.next} isNext={true} />}
+          {nft?.prev && <NavigationButton aria-label="go-previous" href={nft?.prev} isNext={false} />}
           {/* Details */}
           <SimpleGrid columns={[1, null, 2]} gap={{ base: "4", lg: "8" }} w="100%">
             {/* Media Container */}
@@ -125,5 +148,37 @@ const NftWrapper = ({ children }: NftWrapperProps) => {
         {children}
       </Center>
     </Box>
+  );
+};
+
+interface NavigationButtonProps extends IconButtonProps {
+  isNext: boolean;
+  href: string;
+}
+
+const NavigationButton = ({ isNext, href, ...restProps }: NavigationButtonProps) => {
+  const MotionIconButton = motion(IconButton);
+  const leftTransition = { base: isNext ? "unset" : "-15px", lg: isNext ? "unset" : "-35px" };
+  const rightTransition = { base: isNext ? "-15px" : "unset", lg: isNext ? "-35px" : "unset" };
+  return (
+    <MotionIconButton
+      fontSize={{ base: "20px", lg: "25px" }}
+      icon={isNext ? <ImArrowRight2 /> : <ImArrowLeft2 />}
+      style={{ translateY: "50%" }}
+      transition={{ duration: 0.1 }}
+      whileHover={{
+        translateX: isNext ? 4 : -4
+      }}
+      as={RouterLink}
+      to={href}
+      variant="ghost"
+      pos="absolute"
+      top="50%"
+      left={leftTransition}
+      right={rightTransition}
+      transform="translate(0%,-50%)"
+      zIndex="2"
+      {...restProps}
+    />
   );
 };
