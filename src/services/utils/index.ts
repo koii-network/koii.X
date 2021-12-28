@@ -163,3 +163,7 @@ export const formatUnixTimestamp = (
   if (!timestamp) return null;
   return new Date(parseInt(timestamp) * 1000).toLocaleString(undefined, options);
 };
+
+export const refreshPage = () => {
+  window?.location.reload();
+};

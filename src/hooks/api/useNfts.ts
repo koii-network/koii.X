@@ -8,7 +8,7 @@ interface Props {
 const fetchNfts = async (timeframe: string = "1w") => {
   try {
     const { data } = await axios.get(`/attention/nft-summaries?period=${timeframe}`);
-    return data;
+    return data.slice?.(0, 50);
   } catch (error) {
     return undefined;
   }
