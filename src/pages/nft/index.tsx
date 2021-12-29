@@ -82,6 +82,11 @@ export function Nft({ match }: RouteComponentProps<RouteProps>) {
               <Heading as="h2" size="lg" noOfLines={2} color="blue.500">
                 {nft?.title}
               </Heading>
+              {/* Owner */}
+              <Link as={RouterLink} to={`/artist/${nft?.owner || nft?.holders?.[0]}`} color="gray.400" fontSize="xs" noOfLines={1} mt="1px">
+                {nft?.name}
+              </Link>
+
               <Stack direction="row" align="center" mt="2">
                 <Text color="teal.500" fontSize="sm">
                   <Text as="span" d={{ base: "none", lg: "inline" }}>
