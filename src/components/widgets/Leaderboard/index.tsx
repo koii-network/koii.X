@@ -1,7 +1,7 @@
 // ui
 import { Box, Flex, Heading, Stack } from "@chakra-ui/react";
-import { TimeFilter, NsfwFilter } from "components/common";
-import { TopNftsContent } from "components/sections";
+import { TimeFilter, NsfwFilter } from "components/filters";
+import { TopNftsContent } from "components/widgets";
 
 export function Leaderboard() {
   return (

@@ -1,6 +1,6 @@
 // ui
 import { Box } from "@chakra-ui/react";
-import { DragAndDropUploader, Leaderboard } from "components/common";
+import { DragAndDropUploader, Leaderboard } from "components/widgets";
 
 export function Home() {
   return (
