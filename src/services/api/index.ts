@@ -11,3 +11,9 @@ export const voteAsNsfw = async (nftId: string) => {
     }
   );
 };
+
+export const fetchNsfwList = async () => {
+  return await axios.get(`/getNSFWList`, {
+    baseURL: process.env.REACT_APP_API_URL
+  });
+};

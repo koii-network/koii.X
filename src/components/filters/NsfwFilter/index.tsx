@@ -5,7 +5,7 @@ import { FormControl, FormLabel, Switch } from "@chakra-ui/react";
 
 export function NsfwFilter() {
   const [isOn, setIsOn] = useQueryParam("nsfw", withDefault(BooleanParam, false));
-  const onNsfwChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onNsfwChange = async (e: ChangeEvent<HTMLInputElement>) => {
     setIsOn(e.target.checked || undefined, "replaceIn");
   };
 
