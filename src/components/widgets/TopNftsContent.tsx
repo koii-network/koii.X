@@ -2,14 +2,12 @@ import useInfiniteScroll from "react-infinite-scroll-hook";
 import { useEffect, useState } from "react";
 import { StringParam, withQueryParams } from "use-query-params";
 // api
-import { useNfts } from "hooks/api";
+import { useNfts } from "api/hooks";
 // ui
 import { Alert, AlertIcon, AlertTitle, AlertDescription, Button, Center, SimpleGrid, Spinner } from "@chakra-ui/react";
 import { NftFeaturedCard } from "components/cards";
 import { EmptyState } from "components/ui";
 import { refreshPage } from "services/utils";
-// hooks
-import { useRenderCount } from "services/hooks";
 
 const TopNftsContent = ({ query }: any) => {
   /*  */

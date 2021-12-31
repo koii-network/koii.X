@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 // api
-import { getAddress, getBalances } from "services/api/sdk";
-import { connectToExtension, disconnectExtension, initExtension } from "services/api/finnie";
+import { getAddress, getBalances } from "api/sdk";
+import { connectToExtension, disconnectExtension, initExtension } from "api/finnie";
 // utils
 import { toast } from "services/utils";
 
