@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 // context
-import { useFinnie } from "components/context/finnie";
+import { useFinnie } from "components/finnie";
 // ui
 import { Button, Box, Flex, Heading, Stack, Menu, MenuButton, MenuList, MenuItem, Text, IconButton, Tooltip } from "@chakra-ui/react";
 // icons

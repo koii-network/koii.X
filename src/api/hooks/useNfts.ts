@@ -3,8 +3,7 @@ import { useQueryParam } from "use-query-params";
 // services
 import axios from "services/axios";
 // api
-import { useNsfw } from "hooks/api";
-import { fetchNsfwList } from "services/api";
+import { fetchNsfwList } from "api";
 
 interface Props {
   timeframe: string;
