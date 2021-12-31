@@ -18,39 +18,107 @@ First of all, run `npx create-koii-app` to create a Koii Dapp.
 After the installation is done head to the installed project and inside it run `yarn start`.
 
 ## Table of Contents
-
+- [Tech stack](#tech-stack)
 - [Structure](#structure)
-- [Hooks](#hooks)
+- [Examples](#examples)
   - [useFinnie](#useFinnie)
-  - [useSdk](#useSdk)
-  - [useKoii](#useKoii)
-- [Integrations](#storybook)
-  - [Storybook](#storybook)
 - [Environment](#environment)
   - [Node](#node)
   - [Yarn](#yarn)
 
+# Tech Stack
+- [React](https://reactjs.org/) 
+- [TypeScript](https://www.typescriptlang.org/) 
+- [React Query](https://www.typescriptlang.org/): React-query is data fetching, caching & synchronization for React. Also it acts a state management (kinda :sweat_smile:). 
+- [Chakra UI](https://chakra-ui.com/): An opinionated UI framework
+
+
 # Structure
 
-Describes the app structure and usage of each part. Add additional ReadMe-files in each folder as needed and link them here.
+Describes the app structure and usage of each part.
 
-- [services](./src/services) - shared services such as axios.
+- [pages](./src/pages) - your app pages, e.g [/home](https://koii-x.vercel.app/), [/nft/:id](https://koii-x.vercel.app/nft/8nS--L8xnFBIA1f1hiS71iCAmyBEeEz-cpqYiDVjMvI) & [/artist/:id](https://koii-x.vercel.app/artist/CfvJqETL1hpeSAfc6cXx-vexXxCso7nq7Xya76tDzXE)
+The [pages](./src/pages/) are normally linked with react-router [routes](./src/routes/index.tsx)
+
+```javascript
+📦pages
+ ┣ 📂artist
+ ┃ ┗ 📜index.tsx
+ ┣ 📂home
+ ┃ ┗ 📜index.tsx
+ ┣ 📂nft
+ ┃ ┗ 📜index.tsx
+```
+ 
+- [services](./src/services) - shared services such as axios, [Koii port](https://www.npmjs.com/package/@_koi/port) & [utility functions](./src/services/utils/index.ts).
+```
+📦services
+ ┣ 📂axios
+ ┃ ┗ 📜index.ts
+ ┣ 📂port
+ ┃ ┗ 📜index.js
+ ┗ 📂utils
+ ┃ ┗ 📜index.ts
+```
 - [assets](./src/assets) - place images, svgs and any assets here
-- [components](./src/components) - place any shared components here.
-- [lib](./src/lib) - shared business logic such as hooks, api
-- [routes](./src/routes) [react-router](https://reactrouter.com/web/guides/quick-start) implementation.
-- [storybook](./storybook/main.js) - see **[storybook](#storybook)** section
+- [components](./src/components) - place any shared components here, This folder contains every single re-usable component.
+```
+📦components
+ ┣ 📂buttons
+ ┃ ┣ 📂ToggleButton
+ ┃ ┃ ┣ 📜ToggleButton.tsx
+ ┃ ┃ ┗ 📜ToggleButtonGroup.tsx
+ ┣ 📂cards
+ ┃ ┣ 📂NftCard
+ ┃ ┣ 📂NftFeaturedCard
+ ┣ 📂common /* Common components that you probably see on most pages */
+ ┃ ┣ 📂Footer
+ ┃ ┣ 📂Nav
+ ┃ ┣ 📂NftFootbar
+ ┃ ┣ 📂NftMediaContainer
+ ┣ 📂filters
+ ┃ ┣ 📂NsfwFilter
+ ┃ ┣ 📂TimeFilter
+ ┣ 📂finnie
+ ┣ 📂icons
+ ┣ 📂layouts
+ ┣ 📂modals
+ ┃ ┣ 📜ReportModal.tsx /* Report NFT modal */ 
+ ┃ ┣ 📜ShareModal.tsx /* Share NFT modal (with socials) */  
+ ┃ ┣ 📜TipArtistModal.tsx /* Tip artist (by wallet address) modal */
+ ┣ 📂ui /* Re-usable UI components */
+ ┗ 📂widgets
+ ┃ ┣ 📂Leaderboard /* NFTs Leaderboard */
+ ┃ ┣ 📜DragAndDropUploader.tsx /* Upload to Koi.rocks components */
+ ┃ ┣ 📜TopNftsContent.tsx
+ ┃ ┗ 📜index.ts
+```
+- [api](./src/api) - every single api call made here. e.g 
+```
+📦api
+ ┣ 📂hooks /* react-query hooks */
+ ┃ ┣ 📜useArtist.ts /* Get the artist details */
+ ┃ ┣ 📜useNft.ts /* Get the NFT details */
+ ┃ ┣ 📜useNfts.ts /* Get all NFTs based on the timeframe, 24 hours, 1 week, 1 month, 1 year & even all of them */
+ ┃ ┗ 📜useNsfw.ts /* Get NFTs marked as nsfw */
+ ┃
+ ┣ 📜finnie.ts /* Api calls to interact with finnie wallet */
+ ┣ 📜index.ts /* Generic api calls */
+ ┣ 📜sdk.ts /* Koii sdk api calls */
+ ┗ 📜upload.ts /* Api related to upload to Koii network */
+```
+- [routes](./src/routes/index.tsx) - [react-router](https://reactrouter.com/web/guides/quick-start) implementation.
 
-# Hooks
+# Examples
 
 ## useFinnie
 
 Use the `useFinnie` hook whenever you need to interact with finnie.
 
-Example below how to connect to finnie wallet and get the wallet address:
+Example below how to connect to finnie wallet and get the wallet address with few lines of code:
 
-```
-import { useFinnie } from "services/hooks";
+```javascript
+import { useFinnie } from "components/finnie";
 
 function Component() {
   const { state: { connectFinnie, isLoading, isError, walletAddress, isFinnieConnected } } = useFinnie();
@@ -75,61 +143,15 @@ function Component() {
 }
 ```
 
-## useSdk
-
-Use the `useSdk` hook whenever you need to interact with Koii sdk.
-
-Example below how to get Koii nft for the connected finnie wallet:
-
-```
-import { useSdk } from "services/hooks";
-
-function Component() {
-  const {wallet, getKoiiNfts} = useSdk();
-  return (
-    <>
-      <Button onClick={getKoiiNfts}>
-        Get my Koii nfts
-      </Button>
-
-      <NftsListWrapper>
-        {wallet?.nfts?.map((nft) => {
-          return <NftCard item={nft} key={nft.id} />;
-        })}
-      </NftsListWrapper>
-    </>
-  );
-}
-```
-
-## useKoii
-
-Use the `useKoii` hook whenever you need to interact with Koii internal apis, e.g Uploading to Koi.rocks platform.
-
-## Styled Components
-
-Project uses Styled components to make the styles read more:
-
-- https://styled-components.com/docs
-
-## Integrations
-
-### Storybook
-
-implementation of [react-storybook](https://github.com/storybookjs/react).
-
-Run `yarn storybook`
-
 ## Environment
 
 ### Node
 
-These versions provides stable compatibility with React Native and other frameworks:
+We recommend installing the latest LTS node version `v16.13.1` to provides stable compatibility with React
 
-- **Node v12.XX** (`node --version`)
-- **npm 6.XX** (`npm --version`)
+- **Node v16.XX** (`node --version`)
 
-**[Download Node with NPM](https://nodejs.org/download/release/v12.16.3/)**
+**[Or Download Node with NVM](https://github.com/nvm-sh/nvm#usage)**
 
 ### Yarn
 
