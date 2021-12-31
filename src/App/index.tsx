@@ -4,7 +4,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { Routes } from "routes";
 // providers
 import { QueryClient, QueryClientProvider } from "react-query";
-import { FinnieProvider } from "components/context/finnie";
+import { FinnieProvider } from "components/finnie";
 import { ChakraProvider } from "@chakra-ui/react";
 import { QueryParamProvider } from "use-query-params";
 // theme

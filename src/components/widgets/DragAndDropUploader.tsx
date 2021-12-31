@@ -1,6 +1,6 @@
 import { useState, useCallback, ReactNode } from "react";
 // context
-import { useFinnie } from "components/context/finnie";
+import { useFinnie } from "components/finnie";
 // Dropzone
 import { useDropzone } from "react-dropzone";
 // ui
@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 // utils
 import { convertToAr, getMediaType } from "services/utils";
 // api
-import { initializeArTx, signArTx } from "services/api/upload";
+import { initializeArTx, signArTx } from "api/upload";
 
 export function DragAndDropUploader() {
   /* Finnie */

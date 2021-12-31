@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { Link as RouterLink, RouteComponentProps } from "react-router-dom";
 // api
-import { useNft } from "hooks/api";
+import { useNft } from "api/hooks";
 // utils
 import { formatDigitNumber, formatUnixTimestamp } from "services/utils";
 // ui

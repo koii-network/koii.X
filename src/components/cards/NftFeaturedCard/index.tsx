@@ -2,7 +2,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { useState, memo } from "react";
 import { motion } from "framer-motion";
 // api
-import { useNft } from "hooks/api";
+import { useNft } from "api/hooks";
 // ui
 import { Flex, Link, Image, Heading, Text, Center, Spinner, Stack, ButtonGroup, Button, Skeleton, useDisclosure } from "@chakra-ui/react";
 import { ReportModal, ShareModal, TipArtistModal } from "components/modals";

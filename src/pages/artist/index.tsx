@@ -1,7 +1,7 @@
 import { ReactNode, useMemo, memo } from "react";
 import { Link as RouterLink, RouteComponentProps } from "react-router-dom";
 // api
-import { useArtist } from "hooks/api";
+import { useArtist } from "api/hooks";
 // ui
 import { Box, Center, SimpleGrid, Heading, Text, Stack, Button, Spinner, Image, StackDivider, Code, BoxProps, Kbd } from "@chakra-ui/react";
 import { CopyableAddress, EmptyState, ErrorState } from "components/ui";

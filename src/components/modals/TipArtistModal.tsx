@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 // context
-import { useFinnie } from "components/context/finnie";
+import { useFinnie } from "components/finnie";
 // api
-import { sendKoiiTip } from "services/api/finnie";
+import { sendKoiiTip } from "api/finnie";
 // ui
 import {
   Flex,

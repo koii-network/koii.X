@@ -1,7 +1,7 @@
 import { useState } from "react";
 // api
 
-import { voteAsNsfw } from "services/api";
+import { voteAsNsfw } from "api";
 // ui
 import {
   Flex,
