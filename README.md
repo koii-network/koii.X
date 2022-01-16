@@ -16,7 +16,10 @@ First of all, run `npx create-koii-app` to create a Koii Dapp.
 
 After the installation is done head to the installed project and inside it run `yarn start`.
 
+(If the `yarn start` doesn't work, please try `react-scripts --openssl-legacy-provider start`)
+
 ## Table of Contents
+
 - [Tech stack](#tech-stack)
 - [Structure](#structure)
 - [Examples](#examples)
@@ -27,18 +30,17 @@ After the installation is done head to the installed project and inside it run `
   - [Yarn](#yarn)
 
 # Tech Stack
-- [React](https://reactjs.org/) 
-- [TypeScript](https://www.typescriptlang.org/) 
-- [React Query](https://www.typescriptlang.org/): React-query is data fetching, caching & synchronization for React. Also it acts a state management (kinda :sweat_smile:). 
-- [Chakra UI](https://chakra-ui.com/): An opinionated UI framework
 
+- [React](https://reactjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [React Query](https://www.typescriptlang.org/): React-query is data fetching, caching & synchronization for React. Also it acts a state management (kinda :sweat_smile:).
+- [Chakra UI](https://chakra-ui.com/): An opinionated UI framework
 
 # Structure
 
 Describes the app structure and usage of each part.
 
-- [pages](./src/pages) - your app pages, e.g [/home](https://koii-x.vercel.app/), [/nft/:id](https://koii-x.vercel.app/nft/8nS--L8xnFBIA1f1hiS71iCAmyBEeEz-cpqYiDVjMvI) & [/artist/:id](https://koii-x.vercel.app/artist/CfvJqETL1hpeSAfc6cXx-vexXxCso7nq7Xya76tDzXE)
-The [pages](./src/pages/) are normally linked with react-router [routes](./src/routes/index.tsx)
+- [pages](./src/pages) - your app pages, e.g [/home](https://koii-x.vercel.app/), [/nft/:id](https://koii-x.vercel.app/nft/8nS--L8xnFBIA1f1hiS71iCAmyBEeEz-cpqYiDVjMvI) & [/artist/:id](https://koii-x.vercel.app/artist/CfvJqETL1hpeSAfc6cXx-vexXxCso7nq7Xya76tDzXE) The [pages](./src/pages/) are normally linked with react-router [routes](./src/routes/index.tsx)
 
 ```javascript
 📦pages
@@ -49,8 +51,9 @@ The [pages](./src/pages/) are normally linked with react-router [routes](./src/r
  ┣ 📂nft
  ┃ ┗ 📜index.tsx
 ```
- 
+
 - [services](./src/services) - shared services such as axios, [Koii port](https://www.npmjs.com/package/@_koi/port) & [utility functions](./src/services/utils/index.ts).
+
 ```
 📦services
  ┣ 📂axios
@@ -60,8 +63,10 @@ The [pages](./src/pages/) are normally linked with react-router [routes](./src/r
  ┗ 📂utils
  ┃ ┗ 📜index.ts
 ```
+
 - [assets](./src/assets) - place images, svgs and any assets here
 - [components](./src/components) - place any shared components here, This folder contains every single re-usable component.
+
 ```
 📦components
  ┣ 📂buttons
@@ -83,8 +88,8 @@ The [pages](./src/pages/) are normally linked with react-router [routes](./src/r
  ┣ 📂icons
  ┣ 📂layouts
  ┣ 📂modals
- ┃ ┣ 📜ReportModal.tsx /* Report NFT modal */ 
- ┃ ┣ 📜ShareModal.tsx /* Share NFT modal (with socials) */  
+ ┃ ┣ 📜ReportModal.tsx /* Report NFT modal */
+ ┃ ┣ 📜ShareModal.tsx /* Share NFT modal (with socials) */
  ┃ ┣ 📜TipArtistModal.tsx /* Tip artist (by wallet address) modal */
  ┣ 📂ui /* Re-usable UI components */
  ┗ 📂widgets
@@ -93,7 +98,9 @@ The [pages](./src/pages/) are normally linked with react-router [routes](./src/r
  ┃ ┣ 📜TopNftsContent.tsx
  ┃ ┗ 📜index.ts
 ```
-- [api](./src/api) - every single api call made here. e.g 
+
+- [api](./src/api) - every single api call made here. e.g
+
 ```
 📦api
  ┣ 📂hooks /* react-query hooks */
@@ -107,6 +114,7 @@ The [pages](./src/pages/) are normally linked with react-router [routes](./src/r
  ┣ 📜sdk.ts /* Koii sdk api calls */
  ┗ 📜upload.ts /* Api related to upload to Koii network */
 ```
+
 - [routes](./src/routes/index.tsx) - [react-router](https://reactrouter.com/web/guides/quick-start) implementation.
 
 # Examples
@@ -121,23 +129,21 @@ Example below how to connect to finnie wallet and get the wallet address with fe
 import { useFinnie } from "components/finnie";
 
 function Component() {
-  const { state: { connectFinnie, isLoading, isError, walletAddress, isFinnieConnected } } = useFinnie();
+  const {
+    state: { connectFinnie, isLoading, isError, walletAddress, isFinnieConnected }
+  } = useFinnie();
 
   return (
     <>
-      <button onClick={connectFinnie}>
-        {isLoading ? "Connecting..." : isFinnieConnected ? "Connected ✓" : "Connect to finnie"}
-      </button>
+      <button onClick={connectFinnie}>{isLoading ? "Connecting..." : isFinnieConnected ? "Connected ✓" : "Connect to finnie"}</button>
 
       {isFinnieConnected && (
         <p>
-            Connected. Your wallet address is: <code>{walletAddress}</code>
+          Connected. Your wallet address is: <code>{walletAddress}</code>
         </p>
       )}
 
-      {isError && (
-          <p>An error occurred while connecting to finnie.</p>
-      )}
+      {isError && <p>An error occurred while connecting to finnie.</p>}
     </>
   );
 }
