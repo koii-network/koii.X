@@ -4,9 +4,8 @@ import { StringParam, withQueryParams } from "use-query-params";
 // api
 import { useNfts } from "api/hooks";
 // ui
-import { Alert, AlertIcon, AlertTitle, AlertDescription, Button, Center, SimpleGrid, Spinner } from "@chakra-ui/react";
-import { NftFeaturedCard } from "components/cards";
-import { EmptyState } from "components/ui";
+import { Alert, AlertIcon, AlertTitle, AlertDescription, Button, Center, Spinner } from "@chakra-ui/react";
+import { RenderNftsList } from "components/widgets";
 import { refreshPage } from "services/utils";
 
 const TopNftsContent = ({ query }: any) => {
@@ -64,14 +63,8 @@ const TopNftsContent = ({ query }: any) => {
         </Center>
       )}
       {/* Loading | Nfts */}
-      {!isLoading && (
-        <SimpleGrid w="100%" minW="0" minH="0" gap="8" columns={[1, 2, 4]}>
-          {nftsView?.length !== 0 && nftsView?.map((nft: Record<string, any>) => <NftFeaturedCard nft={nft} key={nft?.id} />)}
-        </SimpleGrid>
-      )}
+      {!isLoading && <RenderNftsList nfts={nftsView} />}
       {!isLoading && hasMore && <div ref={sentryRef} />}
-      {/* No nfts to show. */}
-      {!isLoading && nftsView?.length === 0 && <EmptyState minH={{ base: "300px", md: "600px" }} />}
     </>
   );
 };
