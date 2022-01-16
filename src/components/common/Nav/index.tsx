@@ -1,13 +1,15 @@
+import config from "config";
 import { Link } from "react-router-dom";
 // context
 import { useFinnie } from "components/finnie";
 // ui
-import { Button, Box, Flex, Heading, Stack, Menu, MenuButton, MenuList, MenuItem, Text, IconButton, Tooltip } from "@chakra-ui/react";
+import { Button, Box, Flex, Heading, Stack, Menu, MenuButton, MenuList, MenuItem, Text, IconButton, Tooltip, Image } from "@chakra-ui/react";
 // icons
 import { IoRemoveCircle } from "react-icons/io5";
 import { ArweaveIcon, KoiiIcon } from "components/icons";
 import { RiUser4Line } from "react-icons/ri";
-
+// assets
+import Logo from "assets/logo.png";
 export function Nav() {
   const {
     state: { connectFinnie, disconnectFinnie, isLoading, isFinnieConnected, walletBalance, walletAddress }
@@ -15,9 +17,10 @@ export function Nav() {
   return (
     <Box bg="blue.500" px="4" color="white">
       <Flex mx="auto" maxW="container.lg" justify="space-between" align="center" py="3">
-        <Heading as={Link} to="/" size="md">
-          My Koii App
-        </Heading>
+        <Stack as={Link} to="/" direction="row" align="center">
+          <Image width={{ base: 30, lg: "40px" }} src={Logo} />
+          <Heading size="md">{config?.companyName}</Heading>
+        </Stack>
         {/* Connect to finnie button */}
         {isFinnieConnected ? (
           <Stack direction="row" align="center" spacing="1">
