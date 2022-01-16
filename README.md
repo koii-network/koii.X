@@ -22,6 +22,7 @@ After the installation is done head to the installed project and inside it run `
 - [Structure](#structure)
 - [Examples](#examples)
   - [useFinnie](#useFinnie)
+- [Customization](#customization)
 - [Environment](#environment)
   - [Node](#node)
   - [Yarn](#yarn)
@@ -143,7 +144,26 @@ function Component() {
 }
 ```
 
-## Environment
+# Customization
+Edit the [config](./src/config) file to change the basic details about your app.
+e.g.
+```javascript
+const config = {
+  lang: "en", // language of your website
+  locale: "en_US", // locale of your website
+  title: "Koii.X — Your Koii DApp",
+  description: "Create Koii DApp",
+  canonical: "http://koii-x.vercel.app/", // Your production website link
+  twitterHandle: "@KoiiNetwork", // Twitter username
+  companyName: "Koii"
+};
+```
+
+To change the favicon, head to [public](./public) folder and replace the `favicon.svg` with yours.\
+To change the logo, head to [assets](./src/assets) folder and replace the `logo.png` with yours.
+
+
+# Environment
 
 ### Node
 
