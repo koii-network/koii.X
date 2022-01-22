@@ -124,6 +124,40 @@ export const theme = extendTheme({
       defaultProps: {
         isCentered: true
       }
+    },
+    Accordion: {
+      baseStyle: {
+        container: {
+          borderTopWidth: "0px",
+          borderBottomWidth: "1px",
+          _last: {
+            borderBottomWidth: "0px"
+          }
+        },
+        icon: {
+          marginLeft: "auto"
+        },
+        button: {
+          fontSize: "lg",
+          fontWeight: "600",
+          textAlign: "left",
+          px: 0,
+          py: "4",
+          _focus: {
+            boxShadow: "none"
+          },
+          _hover: {
+            bg: "transparent"
+          }
+        },
+        panel: {
+          pb: "4",
+          pl: "4",
+          px: 0,
+          pt: 0,
+          fontSize: "sm"
+        }
+      }
     }
   }
 });
