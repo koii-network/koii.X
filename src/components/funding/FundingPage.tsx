@@ -33,7 +33,7 @@ export function FundingPage({ config }: Props) {
             {/* Slider */}
             <FundingGallery images={config?.images} />
             {/* Project Details */}
-            <Flex order={{ base: "1", lg: "2" }} flexDir="column" justify="flex-start" pt={{ base: "0", lg: "8" }}>
+            <Flex order={{ base: "1", lg: "2" }} flexDir="column" justify="flex-start" pt={{ base: "0", lg: "8" }} minW="0">
               <Text as="h2" fontSize="32px" fontWeight="600" noOfLines={2} mb="2" lineHeight="normal">
                 {config?.title}
               </Text>
@@ -57,7 +57,7 @@ export function FundingPage({ config }: Props) {
 
               {/* Actions */}
 
-              <Stack direction="row" spacing="4" my="25px">
+              <Stack direction={{ base: "column", md: "row" }} spacing="4" my="25px">
                 <Button size="md">Back Project</Button>
                 <Button size="md" variant="outline">
                   Back with a Different Currency
