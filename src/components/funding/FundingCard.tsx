@@ -1,11 +1,18 @@
+import { useFunding } from "components/funding";
 // ui
 import { Flex, Stack, Button, Image, Heading, Text, Badge } from "@chakra-ui/react";
-
 interface Props {
   item: Record<string, any>;
 }
 
 export function FundingCard({ item }: Props) {
+  // config
+  const { dispatch } = useFunding();
+
+  function openFundingModal() {
+    dispatch({ type: "TOGGLE_FUND_MODAL" });
+  }
+
   return (
     <Flex flexDir="column" w="100%" rounded="md" shadow="0px 2px 8px rgba(0, 0, 0, 0.16)">
       {/* Thumbnail */}
@@ -36,7 +43,7 @@ export function FundingCard({ item }: Props) {
         <Text noOfLines={3} fontSize="sm" mt="1" mb="8" color="blue.500" lineHeight="short">
           {item?.description}
         </Text>
-        <Button w="100%" size="sm">
+        <Button w="100%" size="sm" onClick={openFundingModal}>
           Back Project
         </Button>
       </Flex>

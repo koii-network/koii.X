@@ -22,10 +22,18 @@ export const getNftsStats = (nfts: any) =>
     [0, 0]
   );
 
-export const formatDigitNumber = (val: any) => {
+export const formatDigitNumber = (val: any, options?: any) => {
   if (typeof val !== "number") return 0;
-  if (val) return val.toLocaleString("en-US", { maximumFractionDigits: 2 });
+  if (val) return val.toLocaleString("en-US", { maximumFractionDigits: 2, ...options });
   else return 0;
+};
+
+export const parseString = (x: string, base?: any) => {
+  const parsed = parseInt(x, base);
+  if (isNaN(parsed)) {
+    return 0;
+  }
+  return parsed;
 };
 
 /**

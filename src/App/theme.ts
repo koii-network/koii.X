@@ -163,6 +163,15 @@ export const theme = extendTheme({
           fontSize: "sm"
         }
       }
+    },
+    Progress: {
+      baseStyle: {
+        filledTrack: {
+          bg: "#237B75",
+          rounded: "2xl",
+          boxShadow: "4px 0px 12px rgba(23, 23, 83, 0.25)"
+        }
+      }
     }
   }
 });

@@ -1,4 +1,3 @@
-export type { FundingConfig } from "./funding";
 export { FundingPage } from "./FundingPage";
 export { FundingNav } from "./FundingNav";
 export { FundingGallery } from "./FundingGallery";
@@ -9,3 +8,4 @@ export { FundingCard } from "./FundingCard";
 export { FundingDetails } from "./FundingDetails";
 export { FundingModal } from "./FundingModal";
 export { FundingPledgeForm } from "./FundingPledgeForm";
+export { FundingProvider, useFunding } from "./FundingContext";

@@ -1,14 +1,13 @@
 // ui
 import { Box, Tabs, TabList, TabPanels, Tab, TabPanel, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon } from "@chakra-ui/react";
-import { FundingContent } from "components/funding";
-// types
-import type { FundingConfig } from "components/funding";
+import { FundingContent, useFunding } from "components/funding";
 
-interface Props {
-  config: FundingConfig;
-}
+export function FundingDetails() {
+  // config
+  const {
+    state: { config }
+  } = useFunding();
 
-export function FundingDetails({ config }: Props) {
   const hasFaqs = !!config?.faqs?.[0];
   return (
     <Tabs>

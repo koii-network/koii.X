@@ -1,6 +1,5 @@
 import { useState } from "react";
-// types
-import type { FundingConfig } from "components/funding";
+import { useFunding } from "components/funding";
 // ui
 import { Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton, Stack, useToast } from "@chakra-ui/react";
 import { FundingCard, FundingPledgeForm } from "components/funding";
@@ -8,10 +7,16 @@ import { FundingCard, FundingPledgeForm } from "components/funding";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  nfts: FundingConfig["nfts"];
 }
 
-export function FundingModal({ isOpen, onClose, nfts }: Props) {
+export function FundingModal({ isOpen, onClose }: Props) {
+  // config
+  const {
+    state: { config }
+  } = useFunding();
+
+  const nfts = config?.nfts;
+
   const toast = useToast();
   const [status, setStatus] = useState("idle");
   const onSubmit = async () => {

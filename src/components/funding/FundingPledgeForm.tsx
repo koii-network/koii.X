@@ -3,7 +3,7 @@ import { Flex, Text, FormControl, InputGroup, InputRightElement, Input, Stack, B
 import React, { ChangeEvent } from "react";
 
 export function FundingPledgeForm() {
-  const [amount, setAmount] = React.useState<any>(null);
+  const [amount, setAmount] = React.useState<any>("");
   function onSubmit() {
     console.log({ amount });
   }

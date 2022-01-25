@@ -1,4 +1,5 @@
 import React from "react";
+import { useFunding } from "components/funding";
 // Chakra
 import { Box, IconButton, Image, Stack } from "@chakra-ui/react";
 
@@ -15,11 +16,13 @@ import { RiArrowLeftLine, RiArrowRightLine } from "react-icons/ri";
 // install Swiper components
 SwiperCore.use([Thumbs, Navigation]);
 
-interface Props {
-  images: Array<{ src: any }>;
-}
+export function FundingGallery() {
+  // config
+  const {
+    state: { config }
+  } = useFunding();
+  const images = config?.images;
 
-export function FundingGallery({ images }: Props) {
   /* Navigation */
   const [nextEl, nextElRef] = useSwiperRef();
   const [prevEl, prevElRef] = useSwiperRef();
