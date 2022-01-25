@@ -1,6 +1,7 @@
 import { FundingPage } from "components/funding";
+import type { FundingConfig } from "components/funding";
 
-const fundingConfig = {
+const fundingConfig: FundingConfig = {
   title: "Plagiarism Registry DAO",
   companyLogo: "https://pbs.twimg.com/profile_images/1424786684194041859/lkDa9l1U_400x400.png",
   companyName: "Koii Network Creator Studio",
@@ -21,8 +22,9 @@ const fundingConfig = {
     facebook: "https://koii.network",
     github: "https://koii.network"
   },
-  fundContract: "https://etherscan.io/",
-  tokenContract: "https://etherscan.io/",
+  paymentType: "eth",
+  fundContract: "0xde0b0xde0b0xde0b0xde0b", // this is a dummy eth address
+  tokenContract: "0xde0b0xde0b0xde0b0xde0b", // this is a dummy eth address
   about: (
     <div>
       <p>

@@ -123,6 +123,11 @@ export const theme = extendTheme({
     Modal: {
       defaultProps: {
         isCentered: true
+      },
+      baseStyle: {
+        dialogContainer: {
+          alignItems: "flex-start"
+        }
       }
     },
     Accordion: {
