@@ -7,7 +7,7 @@ import { RiExternalLinkLine } from "react-icons/ri";
 export function FundingPage() {
   // config
   const {
-    state: { config, isFundModalOpen },
+    state: { config, fundModal },
     dispatch
   } = useFunding();
 
@@ -17,10 +17,11 @@ export function FundingPage() {
   function openFundingModal() {
     dispatch({ type: "TOGGLE_FUND_MODAL" });
   }
+  console.log({ config, fundModal });
 
   return (
     <>
-      <FundingModal isOpen={isFundModalOpen} onClose={closeFundingModal} />
+      <FundingModal isOpen={fundModal.isOpen} onClose={closeFundingModal} />
       <Box>
         <FundingNav title={config?.title} openFundingModal={openFundingModal} />
         <Box bg="#F5F5F5" color="blue.500" py={{ base: "8", lg: "16" }} minH="100vh">
@@ -61,11 +62,8 @@ export function FundingPage() {
                 </Button>
 
                 <Stack direction="row" spacing="4">
-                  <Button as={Link} href={`https://etherscan.io/address/${config?.fundContract}`} isExternal size="xs" rightIcon={<RiExternalLinkLine />} colorScheme="gray" isActive>
+                  <Button as={Link} href={`https://etherscan.io/address/${config?.fundAddress}`} isExternal size="xs" rightIcon={<RiExternalLinkLine />} colorScheme="gray" isActive>
                     Fund Contract
-                  </Button>
-                  <Button as={Link} href={`https://etherscan.io/address/${config?.tokenContract}`} isExternal size="xs" rightIcon={<RiExternalLinkLine />} colorScheme="gray" isActive>
-                    Token Contract
                   </Button>
                 </Stack>
               </Flex>
@@ -79,7 +77,7 @@ export function FundingPage() {
                 {config?.nfts?.map((nft: any, idx: number) => (
                   <FundingCard key={idx} item={nft} />
                 ))}
-                <FundingPledgeForm />
+                {/* <FundingPledgeForm /> */}
               </Stack>
             </Grid>
           </Box>

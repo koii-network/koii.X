@@ -5,12 +5,11 @@ interface ConfigInterface {
   title: string;
   companyLogo: string;
   companyName: string;
-  goal: number;
+  fundGoal: number;
   images: Array<{ src: string }>;
-  socials: Record<string, string>;
+  socials: Record<string, string | null>;
   paymentType: string | "eth";
-  fundContract: string;
-  tokenContract: string;
+  fundAddress: string;
   about: JSX.Element;
   faqs?: Array<{ question: string; answer: string }>;
   nfts: Array<Record<string, any>>;
@@ -18,34 +17,69 @@ interface ConfigInterface {
 
 const defaultConfig: ConfigInterface = config;
 
+interface ContextInterface {
+  state: {
+    config: ConfigInterface;
+    fundModal: {
+      isOpen: boolean;
+      step: "select-payment" | "connect-wallet" | "success" | "error" | string;
+      paymentType?: "token-only";
+      tokenAmount?: number;
+      isWalletConnected: boolean;
+      ethAddress?: string;
+    };
+  };
+  dispatch: React.Dispatch<ActionType>;
+}
+
 const initialState = {
   config: defaultConfig,
-  isFundModalOpen: false
+  fundModal: {
+    isOpen: false,
+    step: "connect-wallet",
+    isWalletConnected: false
+  }
 };
 
-type ActionType = { type: "CHANGE_FIELDS"; payload: Record<string, any> } | { type: "TOGGLE_FUND_MODAL" } | { type: "CLOSE_FUND_MODAL" };
+type ActionType =
+  | { type: "CHANGE_FIELDS"; payload: Record<string, any> }
+  | { type: "TOGGLE_FUND_MODAL" }
+  | { type: "CLOSE_FUND_MODAL" }
+  | { type: "CHANGE_MODAL_FIELDS"; payload: Record<string, any> };
 
 const reducer = (state: typeof initialState, action: ActionType) => {
   switch (action.type) {
     case "CHANGE_FIELDS":
-      const { payload } = action;
-      return { ...state, ...payload };
+      return { ...state, ...action?.payload };
     case "TOGGLE_FUND_MODAL":
-      return { ...state, isFundModalOpen: !state?.isFundModalOpen };
+      return {
+        ...state,
+        fundModal: {
+          ...state.fundModal,
+          isOpen: !state?.fundModal?.isOpen,
+          step: "select-payment"
+        }
+      };
     case "CLOSE_FUND_MODAL":
-      return { ...state, isFundModalOpen: false };
+      return {
+        ...state,
+        fundModal: {
+          ...state.fundModal,
+          isOpen: false
+        }
+      };
+    case "CHANGE_MODAL_FIELDS":
+      return {
+        ...state,
+        fundModal: {
+          ...state.fundModal,
+          ...action?.payload
+        }
+      };
     default:
       throw new Error(`No action type found for fundingReducer`);
   }
 };
-
-interface ContextInterface {
-  state: {
-    config: ConfigInterface;
-    isFundModalOpen: boolean;
-  };
-  dispatch: React.Dispatch<ActionType>;
-}
 
 const Context = React.createContext<ContextInterface | null>({
   state: initialState,

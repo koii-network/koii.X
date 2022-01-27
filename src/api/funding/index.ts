@@ -7,7 +7,7 @@ declare const window: any;
 // Initiate web3.
 let web3: any;
 if (typeof window.web3 !== undefined) {
-  web3 = new Web3(window.web3.currentProvider);
+  web3 = new Web3(window.ethereum);
 } else {
   web3 = new Web3("https://mainnet.infura.io/v3/f811f2257c4a4cceba5ab9044a1f03d2");
 }

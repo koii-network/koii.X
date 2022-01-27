@@ -2,7 +2,7 @@ const config = {
   title: "Plagiarism Registry DAO",
   companyLogo: "https://pbs.twimg.com/profile_images/1424786684194041859/lkDa9l1U_400x400.png",
   companyName: "Koii Network Creator Studio",
-  goal: 1000,
+  fundGoal: 1000,
   images: [
     { src: "https://picsum.photos/700" },
     { src: "https://picsum.photos/701" },
@@ -13,14 +13,13 @@ const config = {
   ],
   socials: {
     website: "https://koii.network",
-    twitter: "https://koii.network",
-    discord: "https://koii.network",
-    facebook: "https://koii.network",
-    github: "https://koii.network"
+    twitter: "https://twitter.com/KoiiNetwork",
+    discord: "https://discord.com/invite/koii",
+    facebook: null,
+    github: "https://github.com/koii-network"
   },
   paymentType: "eth",
-  fundContract: "0xde0b0xde0b0xde0b0xde0b", // this is a dummy address
-  tokenContract: "0xde0b0xde0b0xde0b0xde0b", // this is a dummy address
+  fundAddress: "0x0ABA0e17f0cD77666D29e6Bf6ac3558B6775b5ca", // this is a dummy address
   about: (
     <div>
       <p>

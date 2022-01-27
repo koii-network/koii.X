@@ -13,8 +13,8 @@ export function FundingBar() {
   const {
     state: { config }
   } = useFunding();
-  const goal = config?.goal;
-  const { fundContract } = config;
+  const fundingGoal = config?.fundGoal;
+  const { fundAddress } = config;
 
   const [{ status, raisedBalance }, setState] = useState<{ status: string; raisedBalance: string }>({ status: "idle", raisedBalance: "0" });
 
@@ -24,7 +24,7 @@ export function FundingBar() {
   const doGetEthBalance = async () => {
     try {
       setState(prevState => ({ ...prevState, status: "loading" }));
-      const raisedBalance = await getEthBalance(fundContract);
+      const raisedBalance = await getEthBalance(fundAddress);
       setState(prevState => ({ ...prevState, status: "success", balance: raisedBalance }));
     } catch (error) {
       setState(prevState => ({ ...prevState, status: "error" }));
@@ -35,17 +35,17 @@ export function FundingBar() {
     doGetEthBalance();
   }, []);
 
-  const percentageDone = ((balance / goal) * 100).toFixed(2);
+  const percentageDone = ((balance / fundingGoal) * 100).toFixed(2);
   return (
     <Box>
       <Text textAlign="right" fontSize="xs" mb="2px">{`%${percentageDone}`}</Text>
       {/* Bar */}
-      <Progress color="teal" bg="#D6D6D6" rounded="2xl" size="lg" value={balance} max={goal} h="22px" isIndeterminate={status === "loading"} />
+      <Progress color="teal" bg="#D6D6D6" rounded="2xl" size="lg" value={balance} max={fundingGoal} h="22px" isIndeterminate={status === "loading"} />
 
       {/* Details */}
       <Stack direction="row" align="center" spacing="40px" mt="2" pl="4">
         <FundingStat label="raised" amount={balance} />
-        <FundingStat label="goal" amount={goal} />
+        <FundingStat label="goal" amount={fundingGoal} />
       </Stack>
     </Box>
   );
