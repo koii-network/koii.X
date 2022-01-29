@@ -25,6 +25,7 @@ After the installation is done head to the installed project and inside it run `
 - [Examples](#examples)
   - [useFinnie](#useFinnie)
 - [Customization](#customization)
+- [Crowdfunding Portal](#prowdfunding)
 - [Environment](#environment)
   - [Node](#node)
   - [Yarn](#yarn)
@@ -167,6 +168,50 @@ const config = {
 To change the favicon, head to [public](./public) folder and replace the `favicon.svg` with yours.\
 To change the logo, head to [assets](./src/assets) folder and replace the `logo.png` with yours.
 
+# Crowdfunding
+If you head to `/funding` route in your Koii.X dApp - [demo](https://koii-x.vercel.app/funding) - you'll see a default Crowdfunding portal that you can fully customize. To do so, head to [funding-config.tsx](./src/components/funding/funding-config.tsx) file in your app, you'll notice a `config` that you can change to match your portal config.
+
+```javascript
+const config = {
+  title: "Plagiarism Registry DAO", // Project title
+  companyLogo: "https://pbs.twimg.com/profile_images/1424786684194041859/lkDa9l1U_400x400.png", // Logo to appear in the navbar.
+  companyName: "Koii Network Creator Studio",
+  fundGoal: 1000, // Your funding goal in "eth"
+  images: [ // Images to be placed in the top slider
+    { src: "https://picsum.photos/700" },
+    { src: "https://picsum.photos/701" },
+    { src: "https://picsum.photos/702" },
+    { src: "https://picsum.photos/703" },
+    { src: "https://picsum.photos/704" },
+    { src: "https://picsum.photos/705" }
+  ],
+  socials: { // Your social network links
+    website: "https://koii.network",
+    twitter: "https://twitter.com/KoiiNetwork",
+    discord: "https://discord.com/invite/koii",
+    facebook: null,
+    github: "https://github.com/koii-network"
+  },
+  paymentType: "eth", // Payment type for now only "eth" (ethereum)
+  fundAddress: "0x0123456789", // Your ethereum funding address that people will deposit to.
+  about: ( // A brief description about the project as html.
+    <div>
+      <p>
+        About us
+      </p>
+      </ul>
+    </div>
+  ),
+  
+  faqs: [ // FAQs content
+    { question: "Question 1", answer: "Answer 1" },
+    { question: "Question 2", answer: "Answer 2" },
+    { question: "Question 3", answer: "Answer 3" }
+  ]
+};
+export default config;
+
+```
 
 # Environment
 
