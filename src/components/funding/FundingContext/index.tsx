@@ -36,7 +36,7 @@ const initialState = {
   config: defaultConfig,
   fundModal: {
     isOpen: false,
-    step: "connect-wallet",
+    step: "select-payment",
     isWalletConnected: false
   }
 };
@@ -65,7 +65,9 @@ const reducer = (state: typeof initialState, action: ActionType) => {
         ...state,
         fundModal: {
           ...state.fundModal,
-          isOpen: false
+          isOpen: false,
+          step: "select-payment",
+          tokenAmount: undefined
         }
       };
     case "CHANGE_MODAL_FIELDS":

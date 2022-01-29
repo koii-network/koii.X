@@ -17,11 +17,10 @@ export function FundingPage() {
   function openFundingModal() {
     dispatch({ type: "TOGGLE_FUND_MODAL" });
   }
-  console.log({ config, fundModal });
 
   return (
     <>
-      <FundingModal isOpen={fundModal.isOpen} onClose={closeFundingModal} />
+      {fundModal.isOpen && <FundingModal isOpen={fundModal.isOpen} onClose={closeFundingModal} />}
       <Box>
         <FundingNav title={config?.title} openFundingModal={openFundingModal} />
         <Box bg="#F5F5F5" color="blue.500" py={{ base: "8", lg: "16" }} minH="100vh">
@@ -73,12 +72,12 @@ export function FundingPage() {
             <Grid templateColumns={{ base: "1fr", lg: "716px 1fr" }} gap={{ base: 8, lg: 16 }} minW="0">
               <FundingDetails />
               {/* Nfts */}
-              <Stack w="100%" spacing="8" mt="8">
+              {/* <Stack w="100%" spacing="8" mt="8">
                 {config?.nfts?.map((nft: any, idx: number) => (
                   <FundingCard key={idx} item={nft} />
                 ))}
-                {/* <FundingPledgeForm /> */}
-              </Stack>
+                <FundingPledgeForm />
+              </Stack> */}
             </Grid>
           </Box>
         </Box>

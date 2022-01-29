@@ -1,9 +1,13 @@
 import { useState } from "react";
-import { useFunding } from "components/funding";
+import { useFunding, FundingSocials } from "components/funding";
 // ui
-import { Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton, Stack, Text, Button, useToast } from "@chakra-ui/react";
+import { Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton, Stack, Text, Button, IconButton, Image, useToast } from "@chakra-ui/react";
 import { FundingCard, FundingPledgeForm } from "components/funding";
+// api
 import { connectToMetaMask } from "api/wallet";
+import { sendEth } from "api/funding";
+// icon
+import { HiOutlineArrowLeft } from "react-icons/hi";
 
 interface Props {
   isOpen: boolean;
@@ -25,7 +29,31 @@ export function FundingModal({ isOpen, onClose }: Props) {
   /* Helpers */
 
   const doSendToken = async () => {
-    console.log(`Sending ${fundModal.tokenAmount} eth to ${fundModal?.ethAddress}...`);
+    // console.log(`Sending ${fundModal.tokenAmount} eth to ${fundModal?.ethAddress}...`);
+    try {
+      setStatus("loading");
+      await sendEth({
+        from: fundModal.ethAddress,
+        to: config.fundAddress,
+        amount: fundModal.tokenAmount
+      }).then(() => {
+        toast({
+          status: "success",
+          title: "Sent successfully",
+          isClosable: true
+        });
+        dispatch({
+          type: "CLOSE_FUND_MODAL"
+        });
+      });
+    } catch (error) {
+      setStatus("idle");
+      toast({
+        status: "error",
+        title: "There was an error sending your transaction.",
+        isClosable: true
+      });
+    }
   };
 
   const onPledgeFormSubmit = async (amount?: number) => {
@@ -52,8 +80,6 @@ export function FundingModal({ isOpen, onClose }: Props) {
             step: "confirm"
           }
         });
-        /* Send Token */
-        doSendToken();
       })
       .catch(err => {
         setStatus("idle");
@@ -75,24 +101,47 @@ export function FundingModal({ isOpen, onClose }: Props) {
       });
   };
 
+  function goToStep(step: any) {
+    dispatch({
+      type: "CHANGE_MODAL_FIELDS",
+      payload: {
+        step
+      }
+    });
+  }
+
   /* Derived States */
   const step = fundModal.step;
   const isModalCentered = step !== "select-payment";
+  const mainImage = config?.images?.[0];
+
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose} size="md" motionPreset="slideInBottom" isCentered>
         <ModalOverlay bg="rgba(53, 33, 181, 0.7)" />
         <ModalContent shadow="none" bg="transparent" my={isModalCentered ? "auto" : "60px"} color="blue.500">
+          {step !== "select-payment" && (
+            <IconButton
+              aria-label="go-back"
+              icon={<HiOutlineArrowLeft size="18px" />}
+              color="white"
+              bg="whiteAlpha.400"
+              onClick={() => goToStep("select-payment")}
+              pos="absolute"
+              top={{ base: "-12", lg: "-8" }}
+              left={{ base: "2", lg: "-2" }}
+            />
+          )}
           <ModalCloseButton color="white" bg="whiteAlpha.400" right={{ base: "2", lg: "-2" }} top={{ base: "-12", lg: "-8" }} shadow="lg" />
           {/* Select Payment */}
           {step === "select-payment" && (
             <ModalBody alignItems="flex-start">
               {/* Nfts */}
-              <Stack d="block" w="100%" spacing="8" alignItems="flex-start" mb="8">
+              {/* <Stack d="block" w="100%" spacing="8" alignItems="flex-start" mb="8">
                 {nfts?.map((nft: any, idx: number) => (
                   <FundingCard key={idx} item={nft} />
                 ))}
-              </Stack>
+              </Stack> */}
               <FundingPledgeForm onSubmit={onPledgeFormSubmit} />
             </ModalBody>
           )}
@@ -100,8 +149,10 @@ export function FundingModal({ isOpen, onClose }: Props) {
           {/* Connect Wallet */}
           {step === "connect-wallet" && (
             <ModalBody alignItems="center">
-              <Stack align="center" spacing="12px" w="100%" maxW="304px" mx="auto" bg="white" rounded="12px" py="4" px="8">
-                <Text fontWeight="600">Connect a Wallet</Text>
+              <Stack align="center" spacing="12px" w="100%" maxW="500px" mx="auto" bg="white" rounded="12px" py="4" px="8">
+                <Text fontWeight="600" fontSize="xl">
+                  Connect a Wallet
+                </Text>
                 <Button w="100%" variant="outline" boxShadow="0px 2px 4px rgba(0, 0, 0, 0.16)" size="lg" onClick={doConnectToMetaMask} isLoading={status === "loading"}>
                   MetaMask
                 </Button>
@@ -111,11 +162,28 @@ export function FundingModal({ isOpen, onClose }: Props) {
 
           {step === "confirm" && (
             <ModalBody alignItems="center">
-              <Stack align="center" spacing="12px" w="100%" maxW="304px" mx="auto" bg="white" rounded="12px" py="4" px="8">
-                <Text fontWeight="600">Confirm</Text>
-                <Button w="100%" size="lg" onClick={doConnectToMetaMask} isLoading={status === "loading"}>
-                  Fund with {fundModal?.tokenAmount} eth
+              <Stack align="center" spacing="12px" w="100%" maxW="500px" mx="auto" bg="white" rounded="12px" py="4" px="8">
+                <Text fontWeight="600" fontSize="xl">
+                  Confirm
+                </Text>
+                <Button w="100%" size="lg" onClick={doSendToken} isLoading={status === "loading"}>
+                  Send {fundModal?.tokenAmount} eth
                 </Button>
+              </Stack>
+            </ModalBody>
+          )}
+
+          {step === "success" && (
+            <ModalBody alignItems="center">
+              <Stack spacing="0" w="100%" maxW="304px" mx="auto" bg="gray.100" rounded="12px" overflow="hidden">
+                <Image src={mainImage?.src} alt="main-image" w="100%" h="150px" objectFit="cover" />
+                <Stack align="center" bg="white" py="6" px="3" spacing="18px" textAlign="center">
+                  <Text fontWeight="600" fontSize="lg">
+                    Thanks for backing <br /> {config?.title}
+                  </Text>
+                  <Text fontSize="sm">We couldn’t do this without the support of people like you. Share the project with other people who might love what we’re doing.</Text>
+                  <FundingSocials justify="center" w="100%" />
+                </Stack>
               </Stack>
             </ModalBody>
           )}

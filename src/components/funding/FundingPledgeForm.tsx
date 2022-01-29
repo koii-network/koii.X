@@ -1,31 +1,43 @@
+import React from "react";
 // ui
-import { Flex, Text, FormControl, InputGroup, InputRightElement, Input, Stack, Button } from "@chakra-ui/react";
-import React, { ChangeEvent, FormEvent } from "react";
+import { Flex, Text, FormControl, InputGroup, InputRightElement, Input, FormErrorMessage, Stack, Button } from "@chakra-ui/react";
+
+// forms
+import { useForm, SubmitHandler } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { PledgeFormSchema } from "services/utils/validations";
 
 interface Props {
   onSubmit: (amount?: number) => void;
 }
 
+type FormValues = {
+  amount: number;
+};
+
 export function FundingPledgeForm({ onSubmit }: Props) {
-  const [amount, setAmount] = React.useState<number>();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors }
+  } = useForm<FormValues>({
+    mode: "onTouched",
+    resolver: yupResolver(PledgeFormSchema)
+  });
 
-  function onFormSubmit(e: FormEvent) {
-    e.preventDefault();
+  const onFormSubmit: SubmitHandler<FormValues> = ({ amount }) => {
     onSubmit(amount);
-  }
+  };
 
-  function onChange(e: ChangeEvent<HTMLInputElement>) {
-    setAmount(Number(parseFloat(e.target.value).toFixed(4)));
-  }
   return (
-    <Flex as="form" flexDir="column" alignItems="center" onSubmit={onFormSubmit} bg="white" shadow="lg" p="4" rounded="12px" color="blue.500">
+    <Flex as="form" flexDir="column" alignItems="center" onSubmit={handleSubmit(onFormSubmit)} bg="white" shadow="lg" p="4" rounded="12px" color="blue.500">
       <Text fontWeight="600" fontSize="2xl">
         Token Only
       </Text>
       <Stack direction="row" spacing="4" align="center" mt="4">
-        <FormControl bg="#F5F5F5" color="#171753">
+        <FormControl bg="#F5F5F5" color="#171753" isInvalid={!!errors.amount} pos="relative">
           <InputGroup size="lg">
-            <Input type="number" required step={0.001} min={0.001} max={1000.0} value={amount || ""} onChange={onChange} px="4" pr="14" textAlign="right" placeholder="2.0" />
+            <Input type="number" id="amount" step="any" px="4" pr="14" textAlign="right" placeholder="2.0" {...register("amount")} />
             <InputRightElement pointerEvents="none" color="rgba(55, 55, 101, 1)" fontSize="1.2em" children="ETH" pr="2" />
           </InputGroup>
         </FormControl>
@@ -33,6 +45,11 @@ export function FundingPledgeForm({ onSubmit }: Props) {
           Pledge
         </Button>
       </Stack>
+      {errors.amount && (
+        <Text fontSize="xs" color="red.500" w="100%" mt="2px">
+          {errors.amount?.message}
+        </Text>
+      )}
       <Text mt="4" fontSize="sm">
         “Tokens Only” contributions only receive tokens. They do not receive an NFT. Tokens are rewared in proportion to the pledge amount.
       </Text>

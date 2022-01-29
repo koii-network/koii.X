@@ -126,7 +126,7 @@ export const theme = extendTheme({
       },
       baseStyle: {
         dialogContainer: {
-          alignItems: "flex-start"
+          // alignItems: "flex-start"
         }
       }
     },
