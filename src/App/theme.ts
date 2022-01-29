@@ -123,6 +123,54 @@ export const theme = extendTheme({
     Modal: {
       defaultProps: {
         isCentered: true
+      },
+      baseStyle: {
+        dialogContainer: {
+          // alignItems: "flex-start"
+        }
+      }
+    },
+    Accordion: {
+      baseStyle: {
+        container: {
+          borderTopWidth: "0px",
+          borderBottomWidth: "1px",
+          _last: {
+            borderBottomWidth: "0px"
+          }
+        },
+        icon: {
+          marginLeft: "auto"
+        },
+        button: {
+          fontSize: "lg",
+          fontWeight: "600",
+          textAlign: "left",
+          px: 0,
+          py: "4",
+          _focus: {
+            boxShadow: "none"
+          },
+          _hover: {
+            bg: "transparent"
+          }
+        },
+        panel: {
+          pb: "4",
+          pl: "4",
+          px: 0,
+          pt: 0,
+          fontSize: "sm"
+        }
+      }
+    },
+    Progress: {
+      baseStyle: {
+        filledTrack: {
+          bg: "#237B75",
+          rounded: "2xl",
+          boxShadow: "4px 0px 12px rgba(23, 23, 83, 0.25)"
+        }
       }
     }
   }

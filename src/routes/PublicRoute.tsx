@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, ReactNode } from "react";
 import { Route } from "react-router-dom";
 
 type PublicRouteProps = {
@@ -7,7 +7,15 @@ type PublicRouteProps = {
   exact?: boolean;
   path?: string;
 };
-const PublicRoute: React.FC<PublicRouteProps> = ({ component: Component, layout: Layout = Fragment, ...rest }) => (
+
+interface Props {
+  children: ReactNode;
+}
+function EmptyLayout({ children }: Props) {
+  return <div>{children}</div>;
+}
+
+const PublicRoute: React.FC<PublicRouteProps> = ({ component: Component, layout: Layout = EmptyLayout, ...rest }) => (
   <Route
     {...rest}
     render={props => {
