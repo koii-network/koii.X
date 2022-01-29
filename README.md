@@ -199,7 +199,6 @@ const config = {
       <p>
         About us
       </p>
-      </ul>
     </div>
   ),
   
