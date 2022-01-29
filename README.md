@@ -25,7 +25,7 @@ After the installation is done head to the installed project and inside it run `
 - [Examples](#examples)
   - [useFinnie](#useFinnie)
 - [Customization](#customization)
-- [Crowdfunding Portal](#prowdfunding)
+- [Crowdfunding Portal](#crowdfunding)
 - [Environment](#environment)
   - [Node](#node)
   - [Yarn](#yarn)
