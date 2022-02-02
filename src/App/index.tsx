@@ -1,4 +1,4 @@
-import { BrowserRouter, Route } from "react-router-dom";
+import { HashRouter, Route } from "react-router-dom";
 import { ReactQueryDevtools } from "react-query/devtools";
 // routes
 import { Routes } from "routes";
@@ -26,12 +26,12 @@ export const App = () => {
         <QueryClientProvider client={queryClient}>
           {/* Finnie Provider */}
           <FinnieProvider>
-            <BrowserRouter>
+            <HashRouter>
               {/* Query Params */}
               <QueryParamProvider ReactRouterRoute={Route}>
                 <Routes />
               </QueryParamProvider>
-            </BrowserRouter>
+            </HashRouter>
           </FinnieProvider>
           <ReactQueryDevtools initialIsOpen={true} />
         </QueryClientProvider>
