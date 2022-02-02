@@ -1,0 +1,24 @@
+{
+    "manifest": "arweave/paths",
+    "version": "0.1.0",
+    "paths": {
+        "static/js/runtime-main.b9e20d3a.js": {
+            "id": "Z5OYj3v9hR8auXvg024VRW2GjFY2_Pa-r7GIy6EfAU8"
+        },
+        "static/js/main.6b474c70.chunk.js.map": {
+            "id": "xFvVdtErUC9U-RY7whN9wMH7jj660yl4WG3nb9Iyj-o"
+        },
+        "static/js/main.6b474c70.chunk.js": {
+            "id": "NA6HtaZAyBiaKTeb_XGGtJ7YEpj-qxKQsrN_J3T84uo"
+        },
+        "static/js/runtime-main.b9e20d3a.js.map": {
+            "id": "7zyGsa9-7Y59dzKXvqvGW1gf7fAWeKzPqJ233NSmbd4"
+        },
+        "static/js/2.dc557979.chunk.js.LICENSE.txt": {
+            "id": "o8xuYcwVW5C0SQ_M_v6Wi-ecGrGWphfaTr9eljxT4PQ"
+        },
+        "static/js/3.d3fd243c.chunk.js": {
+            "id": "O3tKvFf27WvaJBJbGoHqRkHpCSEz7-rYnDjpAcVIdPE"
+        }
+    }
+}
