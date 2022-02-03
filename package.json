@@ -52,6 +52,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "deploy": "yarn build && yarn deploy:arkb",
     "deploy:arkb": "arkb deploy build -w wallet.json --timeout=50000 --debug",
     "lint": "prettier -c --write './src' && npx eslint",
     "test-dev": "jest --forceExit --maxWorkers=25% -u",
