@@ -1,8 +1,10 @@
-import { FundingNav, FundingGallery, FundingSocials, FundingBar, FundingDetails, FundingCard, FundingModal, FundingPledgeForm, useFunding } from "components/funding";
+import { FundingNav, FundingGallery, FundingSocials, FundingBar, FundingDetails, FundingModal, useFunding } from "components/funding";
 // ui
 import { Box, Grid, Flex, Stack, Text, Image, Button, Link } from "@chakra-ui/react";
 // icons
 import { RiExternalLinkLine } from "react-icons/ri";
+// utils
+import { getFundContract } from "api/funding";
 
 export function FundingPage() {
   // config
@@ -56,12 +58,15 @@ export function FundingPage() {
                 <Button size="lg" my="25px" w="100%" alignItems="center" onClick={openFundingModal}>
                   Back Project{" "}
                   <Text as="span" ml="2" fontSize="xs" color="blue.200">
-                    with ETH
+                    with{" "}
+                    <Text as="span" textTransform="uppercase">
+                      {config?.paymentType}
+                    </Text>
                   </Text>
                 </Button>
 
                 <Stack direction="row" spacing="4">
-                  <Button as={Link} href={`https://etherscan.io/address/${config?.fundAddress}`} isExternal size="xs" rightIcon={<RiExternalLinkLine />} colorScheme="gray" isActive>
+                  <Button as={Link} href={getFundContract(config?.fundAddress, config?.paymentType)} isExternal size="xs" rightIcon={<RiExternalLinkLine />} colorScheme="gray" isActive>
                     Fund Contract
                   </Button>
                 </Stack>

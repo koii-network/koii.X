@@ -4,8 +4,8 @@ import { useFunding, FundingSocials } from "components/funding";
 import { Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton, Stack, Text, Button, IconButton, Image, useToast } from "@chakra-ui/react";
 import { FundingCard, FundingPledgeForm } from "components/funding";
 // api
-import { connectToMetaMask } from "api/wallet";
-import { sendEth } from "api/funding";
+import { connectToWallet } from "api/wallet";
+import { getWalletName, sendToken } from "api/funding";
 // icon
 import { HiOutlineArrowLeft } from "react-icons/hi";
 
@@ -29,13 +29,14 @@ export function FundingModal({ isOpen, onClose }: Props) {
   /* Helpers */
 
   const doSendToken = async () => {
-    // console.log(`Sending ${fundModal.tokenAmount} eth to ${fundModal?.ethAddress}...`);
+    // console.log(`Sending ${fundModal.tokenAmount} to ${config?.fundAddress}...`);
     try {
       setStatus("loading");
-      await sendEth({
-        from: fundModal.ethAddress,
+      await sendToken({
+        from: fundModal.walletAddress,
         to: config.fundAddress,
-        amount: fundModal.tokenAmount
+        amount: fundModal.tokenAmount,
+        currency: config?.paymentType
       }).then(() => {
         toast({
           status: "success",
@@ -66,16 +67,17 @@ export function FundingModal({ isOpen, onClose }: Props) {
     });
   };
 
-  const doConnectToMetaMask = async () => {
+  const doConnectToWallet = async () => {
     setStatus("loading");
-    await connectToMetaMask()
+    await connectToWallet(config?.paymentType)
       .then(async res => {
         setStatus("idle");
         /* Connected, Save address */
+        // console.log(`Connected to ${getWalletName(config?.paymentType)} with ${res?.address}`);
         dispatch({
           type: "CHANGE_MODAL_FIELDS",
           payload: {
-            ethAddress: res?.ethAddress,
+            walletAddress: res?.address,
             isWalletConnected: true,
             step: "confirm"
           }
@@ -84,17 +86,11 @@ export function FundingModal({ isOpen, onClose }: Props) {
       .catch(err => {
         setStatus("idle");
         if (err?.message === "extension_not_installed") {
-          toast({ status: "error", title: "You don't have MetaMask installed", isClosable: true });
-        } else if (err?.message === "no_accounts") {
-          toast({
-            status: "error",
-            title: "Please add an account your MetaMask",
-            isClosable: true
-          });
+          toast({ status: "error", title: `You don't have ${getWalletName(config?.paymentType)} installed`, isClosable: true });
         } else {
           toast({
             status: "error",
-            title: "There was an error connecting MetaMask. Please try again.",
+            title: `There was an error connecting ${getWalletName(config?.paymentType)}. Please try again.`,
             isClosable: true
           });
         }
@@ -114,6 +110,31 @@ export function FundingModal({ isOpen, onClose }: Props) {
   const step = fundModal.step;
   const isModalCentered = step !== "select-payment";
   const mainImage = config?.images?.[0];
+
+  const renderConnector = () => {
+    const connectorStyles = {
+      w: "100%",
+      variant: "outline",
+      boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.16)",
+      size: "lg"
+    };
+    switch (config?.paymentType) {
+      case "eth":
+        return (
+          <Button onClick={doConnectToWallet} isLoading={status === "loading"} {...connectorStyles}>
+            MetaMask
+          </Button>
+        );
+      case "ar":
+        return (
+          <Button onClick={doConnectToWallet} isLoading={status === "loading"} {...connectorStyles}>
+            ArConnect
+          </Button>
+        );
+      default:
+        return "#";
+    }
+  };
 
   return (
     <>
@@ -153,9 +174,7 @@ export function FundingModal({ isOpen, onClose }: Props) {
                 <Text fontWeight="600" fontSize="xl">
                   Connect a Wallet
                 </Text>
-                <Button w="100%" variant="outline" boxShadow="0px 2px 4px rgba(0, 0, 0, 0.16)" size="lg" onClick={doConnectToMetaMask} isLoading={status === "loading"}>
-                  MetaMask
-                </Button>
+                {renderConnector()}
               </Stack>
             </ModalBody>
           )}
@@ -167,7 +186,10 @@ export function FundingModal({ isOpen, onClose }: Props) {
                   Confirm
                 </Text>
                 <Button w="100%" size="lg" onClick={doSendToken} isLoading={status === "loading"}>
-                  Send {fundModal?.tokenAmount} eth
+                  Send {fundModal?.tokenAmount}{" "}
+                  <Text as="span" ml="1">
+                    {config?.paymentType}
+                  </Text>
                 </Button>
               </Stack>
             </ModalBody>

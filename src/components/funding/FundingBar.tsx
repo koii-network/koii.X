@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useFunding } from "components/funding";
 // api
-import { getEthBalance } from "api/funding";
+import { getBalance, getEthBalance } from "api/funding";
 import { useExchangeRates } from "api/funding/useExchangeRates";
 // ui
 import { Box, Text, Stack, Progress } from "@chakra-ui/react";
@@ -24,7 +24,8 @@ export function FundingBar() {
   const doGetEthBalance = async () => {
     try {
       setState(prevState => ({ ...prevState, status: "loading" }));
-      const raisedBalance = await getEthBalance(fundAddress);
+      const raisedBalance = await getBalance(fundAddress, config?.paymentType);
+
       setState(prevState => ({ ...prevState, status: "success", balance: raisedBalance }));
     } catch (error) {
       setState(prevState => ({ ...prevState, status: "error" }));
@@ -44,8 +45,8 @@ export function FundingBar() {
 
       {/* Details */}
       <Stack direction="row" align="center" spacing="40px" mt="2" pl="4">
-        <FundingStat label="raised" amount={balance} />
-        <FundingStat label="goal" amount={fundingGoal} />
+        <FundingStat label="raised" amount={balance} currency={config?.paymentType} />
+        <FundingStat label="goal" amount={fundingGoal} currency={config?.paymentType} />
       </Stack>
     </Box>
   );
@@ -54,17 +55,21 @@ export function FundingBar() {
 interface FundingStatProps {
   label: string;
   amount: number;
+  currency: string;
 }
-function FundingStat({ label, amount }: FundingStatProps) {
+function FundingStat({ label, amount, currency }: FundingStatProps) {
   /* Get Exchange rates */
-  const { data: rates } = useExchangeRates();
+  const { data: rates } = useExchangeRates(currency);
 
   const amountInUSD = amount * rates?.USD;
   return (
     <Stack align="center" justify="center" textAlign="center" spacing="0">
       <Text color="#237B75" lineHeight="normal">
         <Text fontWeight="bold" color="blue.500" as="span">
-          {formatDigitNumber(amount, { minimumSignificantDigits: 2 })} ETH
+          {formatDigitNumber(amount, { minimumSignificantDigits: 2 })}{" "}
+          <Text as="span" textTransform="uppercase">
+            {currency}
+          </Text>
         </Text>{" "}
         {label}
       </Text>
