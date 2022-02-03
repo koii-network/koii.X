@@ -18,8 +18,8 @@ const config = {
     facebook: null,
     github: "https://github.com/koii-network"
   },
-  paymentType: "ar",
-  fundAddress: "_JHZaUrLyOVSf_t87GBASHXziurNqXmxJ0VgYg-rggM",
+  paymentType: "eth",
+  fundAddress: "0x4B8F67af4a7a7098adef1c9918e9e62f92F9065F",
   about: (
     <div>
       <p>
