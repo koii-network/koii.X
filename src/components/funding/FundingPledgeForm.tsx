@@ -1,4 +1,4 @@
-import React from "react";
+import { useFunding } from "components/funding";
 // ui
 import { Flex, Text, FormControl, InputGroup, InputRightElement, Input, FormErrorMessage, Stack, Button } from "@chakra-ui/react";
 
@@ -16,6 +16,11 @@ type FormValues = {
 };
 
 export function FundingPledgeForm({ onSubmit }: Props) {
+  // config
+  const {
+    state: { config }
+  } = useFunding();
+
   const {
     handleSubmit,
     register,
@@ -38,7 +43,7 @@ export function FundingPledgeForm({ onSubmit }: Props) {
         <FormControl bg="#F5F5F5" color="#171753" isInvalid={!!errors.amount} pos="relative">
           <InputGroup size="lg">
             <Input type="number" id="amount" step="any" px="4" pr="14" textAlign="right" placeholder="2.0" {...register("amount")} />
-            <InputRightElement pointerEvents="none" color="rgba(55, 55, 101, 1)" fontSize="1.2em" children="ETH" pr="2" />
+            <InputRightElement pointerEvents="none" color="rgba(55, 55, 101, 1)" fontSize="1.2em" textTransform="uppercase" children={config?.paymentType} pr="2" />
           </InputGroup>
         </FormControl>
         <Button size="lg" type="submit">
@@ -51,7 +56,7 @@ export function FundingPledgeForm({ onSubmit }: Props) {
         </Text>
       )}
       <Text mt="4" fontSize="sm">
-        “Tokens Only” contributions only receive tokens. They do not receive an NFT. Tokens are rewared in proportion to the pledge amount.
+        “Tokens Only” contributions only receive tokens. Tokens are rewared in proportion to the pledge amount.
       </Text>
     </Flex>
   );

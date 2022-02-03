@@ -8,7 +8,7 @@ interface ConfigInterface {
   fundGoal: number;
   images: Array<{ src: string }>;
   socials: Record<string, string | null>;
-  paymentType: string | "eth";
+  paymentType: string | "eth" | "ar";
   fundAddress: string;
   about: JSX.Element;
   faqs?: Array<{ question: string; answer: string }>;
@@ -26,7 +26,7 @@ interface ContextInterface {
       paymentType?: "token-only";
       tokenAmount?: number;
       isWalletConnected: boolean;
-      ethAddress?: string;
+      walletAddress?: string;
     };
   };
   dispatch: React.Dispatch<ActionType>;
