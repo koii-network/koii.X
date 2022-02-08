@@ -1,6 +1,7 @@
 {
   "name": "koiix",
   "version": "0.1.0",
+  "homepage": ".",
   "private": true,
   "license": "",
   "dependencies": {
@@ -51,6 +52,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "deploy": "yarn build && yarn deploy:arkb",
+    "deploy:arkb": "arkb deploy build -w wallet.json --timeout=50000 --debug",
     "lint": "prettier -c --write './src' && npx eslint",
     "test-dev": "jest --forceExit --maxWorkers=25% -u",
     "lint-test": "yarn lint && tsc && yarn test-dev",

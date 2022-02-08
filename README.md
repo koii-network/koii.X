@@ -25,6 +25,7 @@ After the installation is done head to the installed project and inside it run `
 - [Examples](#examples)
   - [useFinnie](#useFinnie)
 - [Customization](#customization)
+- [Deploy to Arweave](#deploy-to-arweave)
 - [Crowdfunding Portal](#crowdfunding)
 - [Environment](#environment)
   - [Node](#node)
@@ -169,51 +170,31 @@ const config = {
 To change the favicon, head to [public](./public) folder and replace the `favicon.svg` with yours.\
 To change the logo, head to [assets](./src/assets) folder and replace the `logo.png` with yours.
 
+# Deploy to Arweave
+
+Few simple steps to deploy to your Koii-X to Arweave:
+
+1. Install [arkb](https://github.com/textury/arkb) globally on your machine. arkb runs using NodeJS and NPM. You must have both installed on your machine for it to work.
+
+```
+npm install -g arkb
+```
+
+2. Put your Arweave wallet keyfile inside the root folder under as `wallet.json`
+
+3. Finally, Run:
+
+```
+ yarn deploy
+```
+
+To deploy to arweave :tada:
+
 # Crowdfunding
 
-If you head to `/funding` route in your Koii.X dApp - [demo](https://koii-x.vercel.app/funding) - you'll see a default Crowdfunding portal that you can fully customize. To do so, head to [funding-config.tsx](./src/components/funding/funding-config.tsx) file in your app, you'll notice a `config` that you can change to match your portal config.
+Want to create your own Fundraiser DApp ?
 
-```javascript
-const config = {
-  title: "Plagiarism Registry DAO", // Project title
-  companyLogo: "https://pbs.twimg.com/profile_images/1424786684194041859/lkDa9l1U_400x400.png", // Logo to appear in the navbar.
-  companyName: "Koii Network Creator Studio",
-  fundGoal: 1000, // Your funding goal in "eth"
-  images: [
-    // Images to be placed in the top slider
-    { src: "https://picsum.photos/700" },
-    { src: "https://picsum.photos/701" },
-    { src: "https://picsum.photos/702" },
-    { src: "https://picsum.photos/703" },
-    { src: "https://picsum.photos/704" },
-    { src: "https://picsum.photos/705" }
-  ],
-  socials: {
-    // Your social network links
-    website: "https://koii.network",
-    twitter: "https://twitter.com/KoiiNetwork",
-    discord: "https://discord.com/invite/koii",
-    facebook: null,
-    github: "https://github.com/koii-network"
-  },
-  paymentType: "ar", // 'eth' or 'ar' Portal currency "eth" (ethereum) or "ar" (Arweave)
-  fundAddress: "_JHZaUrLyOVSf_t87GBASHXziurNqXmxJ0VgYg-rggM", // Your funding address that people will deposit to. (Ethereum or Arweave address, depends on paymentType)
-  // A brief description about the project as html.
-  about: (
-    <div>
-      <p>About us</p>
-    </div>
-  ),
-
-  faqs: [
-    // FAQs content
-    { question: "Question 1", answer: "Answer 1" },
-    { question: "Question 2", answer: "Answer 2" },
-    { question: "Question 3", answer: "Answer 3" }
-  ]
-};
-export default config;
-```
+For more information and docs about Koii Fundraiser DApp head to [Crowdfunding](https://github.com/koii-network/crowdfunding)
 
 # Environment
 

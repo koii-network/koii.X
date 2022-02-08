@@ -1,4 +1,4 @@
-import { BrowserRouter, Route } from "react-router-dom";
+import { HashRouter, BrowserRouter, Route } from "react-router-dom";
 import { ReactQueryDevtools } from "react-query/devtools";
 // routes
 import { Routes } from "routes";
@@ -17,6 +17,7 @@ import "@fontsource/ibm-plex-sans";
 const queryClient = new QueryClient();
 
 export const App = () => {
+  const RouterWrapper = (process.env.NODE_ENV !== "production" ? BrowserRouter : HashRouter) as React.ElementType;
   return (
     <>
       <SEO />
@@ -26,12 +27,12 @@ export const App = () => {
         <QueryClientProvider client={queryClient}>
           {/* Finnie Provider */}
           <FinnieProvider>
-            <BrowserRouter>
+            <RouterWrapper>
               {/* Query Params */}
               <QueryParamProvider ReactRouterRoute={Route}>
                 <Routes />
               </QueryParamProvider>
-            </BrowserRouter>
+            </RouterWrapper>
           </FinnieProvider>
           <ReactQueryDevtools initialIsOpen={true} />
         </QueryClientProvider>
